@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial architecture: 4-layer chain of command (Mycelium → Scout Swarm → Army → Dynamic)
 - Biological model assignment: brain routes, ants see and execute
-- Named memory tools: **QMD** (long-term, searchable) and **LCM** (recent context, lossless compaction)
+- Named memory tools: **QMD** (long-term, curated) and **LCM** (session-level, well-organised, feeds into QMD)
+- Memory funnel model: LCM compacts sessions → only valuable knowledge rises to QMD
 - Scout Swarm: 4 scout types running in parallel (Tool, Leaf, Benchmark, Integration)
 - The Food Chain: scouts find food → ants get stronger → scouts find leaves → brain grows → colony grows
 - 178 agency-agent roles from msitarzewski/agency-agents

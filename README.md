@@ -4,7 +4,7 @@
 
 ## Biological Model
 
-In nature, mycelium doesn't see — it *routes underground*. The ants are the eyes and hands that sense the world and execute tasks. The mycelium network itself is long-term memory. Pheromone trails are recent signals that guide ant behavior before being absorbed.
+In nature, mycelium doesn't see — it *routes underground*. The ants are the eyes and hands that sense the world and execute tasks. Pheromone trails are recent signals that guide behavior. The mycelium network is accumulated knowledge that persists across seasons.
 
 **Scouts fan out in parallel**, each searching for something specific:
 - 🔧 **Tool Scouts** — find food (new tools, improvements) to strengthen the ants
@@ -16,12 +16,18 @@ The ones that find something write pheromone trails (shared memory). The ones th
 
 ### Memory Tools
 
-| Tool | Purpose | Analogy |
-|------|---------|---------|
-| **QMD** | Long-term memory — searchable index of files, transcripts, daily logs | The mycelium network — accumulated knowledge that persists |
-| **LCM** | Context compaction — lossless recent detail with `lcm_grep`, `lcm_describe`, `lcm_expand` | Pheromone trails — recent signals not yet absorbed into the network |
+A funnel, not a partition:
 
-Together, QMD + LCM form the colony's complete memory.
+```
+  Session grows → LCM compacts → only valuable knowledge rises → QMD
+```
+
+| Tool | Role | What lives there |
+|------|------|-----------------|
+| **LCM** | Session brain — short-term, well-organised. Compacts perfectly as conversations grow. `lcm_grep`, `lcm_describe`, `lcm_expand` for retrieval. | Everything from the session: conversations, investigations, partial work, temporary state |
+| **QMD** | Colony brain — long-term, curated. Never polluted with noise. | Only durable, reusable knowledge: lessons, benchmarks, revenue opportunities, system state |
+
+**The rule:** Don't dump noise into QMD. Let LCM do its job. Only promote to QMD when something is genuinely reusable across sessions.
 
 ```
 Brain (Mycelium)       → mimo-v2-pro:free  → 1M context, NO vision — needs memory, not eyes

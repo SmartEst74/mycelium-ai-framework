@@ -167,15 +167,18 @@ Stronger teams produce MORE RESULTS
 
 ## Shared Memory — Where Scouts Write
 
-Scouts write to two memory systems, each for different recall patterns:
+Scouts write into the memory funnel:
 
-| Memory | What Goes Here | Retrieval |
-|--------|---------------|-----------|
-| **QMD** | Durable knowledge — `#lesson`, `#green-leaf`, `#benchmark` | Searchable across sessions, persists forever |
-| **LCM** | Recent findings — `#shortcut`, `#pain-point` | `lcm_grep`, `lcm_describe`, `lcm_expand` from compacted context |
+```
+  Session grows → LCM compacts → only valuable knowledge rises → QMD
+```
 
-**QMD** = the mycelium network. Long-term memory that grows with the colony.
-**LCM** = pheromone trails. Recent signals that haven't yet been absorbed into the network.
+| Memory | What Scouts Write | Why |
+|--------|------------------|-----|
+| **LCM** | Everything — findings, investigations, partial results, dead ends | LCM compacts it all perfectly. No need to curate on write. |
+| **QMD** | Only proven value — `#lesson`, `#green-leaf`, `#benchmark` | Durable knowledge that will be needed again next session |
+
+Scouts don't decide what's valuable. They dump into LCM. The session compaction process surfaces what matters. Only then does it rise to QMD.
 
 Every scout writes to whichever system fits. The colony reads both.
 

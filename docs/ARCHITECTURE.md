@@ -164,31 +164,51 @@ Stronger brain → better routing → stronger teams → more results
 
 ## Shared Memory — The Colony's Nervous System
 
-Two memory systems work together, each handling a different layer of recall:
+Two memory systems form a funnel, not a partition:
 
-| Tool | Purpose | Analogy |
-|------|---------|---------|
-| **QMD** | Long-term memory — searchable index of files, transcripts, daily logs. Durable knowledge persists here across sessions. | The mycelium network underground — stores and retrieves accumulated knowledge |
-| **LCM** | Context compaction — preserves recent raw detail and layered summaries so specifics are not lost when conversations get long. Provides `lcm_grep`, `lcm_describe`, `lcm_expand` for retrieval of compacted context. | The pheromone trails — recent signals that haven't yet been absorbed into the network |
+```
+  Session grows
+       │
+       ▼
+  ┌─────────┐
+  │   LCM   │  Short-term, well-organised memory
+  │         │  Compacts perfectly as sessions grow
+  │         │  grep / describe / expand for retrieval
+  └────┬────┘
+       │
+       │  Only truly valuable knowledge
+       │  rises here (lessons, benchmarks,
+       │  revenue, durable state)
+       ▼
+  ┌─────────┐
+  │   QMD   │  Long-term memory
+  │         │  Curated, searchable, persistent
+  │         │  Never polluted with noise
+  └─────────┘
+```
 
-**Together, QMD + LCM form the colony's complete memory.** QMD is what the colony *knows*. LCM is what the colony *remembers from recent conversations*. Every agent reads both before starting work.
+**LCM** is the session brain — it captures everything, compacts it losslessly, and keeps recent context well-organised so nothing important is lost mid-conversation. As sessions grow, LCM summarises perfectly. No need to dump every thought into permanent storage.
+
+**QMD** is the colony brain — only high-value, durable knowledge lives here. Lessons, benchmarks, revenue opportunities, system state. It stays clean because LCM already handles the rest.
+
+**The rule:** Don't fill QMD with noise. Let LCM do its job. Only promote to QMD when something is genuinely reusable across sessions.
 
 ### Shared Memory Tags
 
 Every agent reads and writes shared memory. This is non-negotiable.
 
-### What Goes In Shared Memory
+### What Goes Where
 
-| Tag | Purpose | Written By | Read By |
-|-----|---------|-----------|---------|
-| `#mission` | Active work in progress | Dynamic Ants, Army Ants | Mycelium, Scout |
-| `#mission-complete` | Finished work with results | Dynamic Ants | Mycelium, Scout |
-| `#pain-point` | Something that broke or blocked | Any agent | All agents |
-| `#lesson` | Durable knowledge gained | Any agent | All agents |
-| `#shortcut` | Efficiency trick discovered | Dynamic Ants | All agents |
-| `#green-leaf` | Revenue opportunity found | Scout | Mycelium |
-| `#benchmark` | Model performance data | Scout | Mycelium, Army Ants |
-| `#durable-state` | Current system state snapshot | Mycelium | All agents |
+| Tag | Goes To | Why |
+|-----|---------|-----|
+| `#lesson` | QMD | Durable knowledge, reusable across sessions |
+| `#benchmark` | QMD | Model performance data, long-lived |
+| `#green-leaf` | QMD | Revenue opportunity, needs to persist |
+| `#durable-state` | QMD | System snapshot, survives restarts |
+| `#mission` | LCM | Active work — compacted when done |
+| `#mission-complete` | LCM | Finished work — absorbed into session summary |
+| `#pain-point` | LCM→QMD | If recurring, promote to QMD as `#lesson` |
+| `#shortcut` | LCM→QMD | If proven, promote to QMD as `#lesson` |
 
 ### Memory Rules
 
