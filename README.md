@@ -29,27 +29,22 @@ A funnel, not a partition:
 
 **The rule:** Don't dump noise into QMD. Let LCM do its job. Only promote to QMD when something is genuinely reusable across sessions.
 
-### The Private Repo — Live Shared Awareness
+### The Memory Integration Skill (Private Repo)
 
-A private repository acts as the colony's **shared nervous system**. Not just storage — a real-time broadcast layer where every agent instantly knows what every other agent knows.
+The private repo holds the **sellable product**: the memory integration skill. NOT memories — those stay local (QMD, LCM, filesystem). The repo contains the skill that teaches any OpenClaw instance how to wire memory systems into a self-improving colony.
 
 ```
-  Ant #1 ──┐    Ant #2 ──┐    Ant #3 ──┐
-           │             │             │
-           ▼             ▼             ▼
-    ┌─────────────────────────────────┐
-    │       PRIVATE REPO             │
-    │  MEMORY.md    — doctrine/state │
-    │  memory/      — daily logs     │
-    │  workspace/   — indexed by QMD │
-    └──────────────┬─────────────────┘
-                   │  LCM promotes
-                   │  valuable knowledge
-                   ▼
-              MYCELIUM reads → routes
+LOCAL (fast, immediate):
+  QMD  ← long-term curated knowledge
+  LCM  ← session compaction, feeds QMD
+  fs   ← daily logs, workspace files
+
+PRIVATE REPO (sellable):
+  SKILL.md, templates/, memory-protocol, examples
+  → How to wire QMD + LCM into a self-improving colony
 ```
 
-**Any ant starting work reads the repo first.** It instantly knows: what missions are active, what broke recently, what shortcuts exist, what revenue is in motion. No briefing needed. The colony functions as one organism because every part of it reads the same brain.
+**Revenue model:** Sell on ClawHub. One-time install that makes any OpenClaw deployment dramatically more capable — no repeated mistakes, no cold starts, compounding memory.
 
 ```
 Brain (Mycelium)       → mimo-v2-pro:free  → 1M context, NO vision — needs memory, not eyes
