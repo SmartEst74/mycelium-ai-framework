@@ -24,22 +24,28 @@ In this framework:
                                │
          ┌─────────────────────┼─────────────────────┐
          │                     │                     │
-  ┌──────▼──────┐      ┌──────▼──────┐      ┌──────▼──────┐
-  │  Mycelium   │      │   Scout     │      │ Army Ants   │
-  │  (Brain)    │      │ (Researcher)│      │ (Builders)  │
-  │ mimo-v2-pro │      │step-3.5-flash│     │ mimo-v2-pro │
-  │ 1M context  │      │ fast/cheap  │      │ 1M context  │
-  │ NO vision   │      │ web access  │      │ NO vision   │
-  └──────┬──────┘      └─────────────┘      └──────┬──────┘
-         │                                          │
-         │                                   ┌──────▼──────┐
-         │                                   │ Dynamic Ants│
-         │                                   │  (Workers)  │
-         │                                   │ mimo-v2-omni│
-         │                                   │ vision+tools│
-         │                                   └──────┬──────┘
-         │                                          │
-         └──────────────────────────────────────────┘
+  ┌──────▼──────┐   ┌─────────▼──────────┐   ┌──────▼──────┐
+  │  Mycelium   │   │   SCOUT SWARM      │   │ Army Ants   │
+  │  (Brain)    │   │ (many in parallel)  │   │ (Builders)  │
+  │ mimo-v2-pro │   │ step-3.5-flash      │   │ mimo-v2-pro │
+  │ 1M context  │   │                     │   │ 1M context  │
+  │ NO vision   │   │  🔧 Tool Scouts     │   │ NO vision   │
+  │             │   │  🌿 Leaf Scouts     │   │             │
+  │             │   │  📊 Benchmark Scouts │   │             │
+  │             │   │  🔌 Integration Scouts│  │             │
+  └──────┬──────┘   └─────────┬──────────┘   └──────┬──────┘
+         │                    │                      │
+         │                    │ writes findings      │ builds teams
+         │                    │ to memory            │
+         │                    ▼                      │
+         │           ┌────────────────┐        ┌─────▼──────┐
+         │           │ Shared Memory  │        │ Dynamic Ants│
+         │           │ (pheromone     │        │  (Workers)  │
+         │           │  trails)       │        │ mimo-v2-omni│
+         │           └────────────────┘        │ vision+tools│
+         │                                     └─────┬──────┘
+         │                                           │
+         └───────────────────────────────────────────┘
                     ALL FEED INTO SHARED MEMORY
 ```
 
@@ -64,22 +70,46 @@ In this framework:
 
 **Key rule**: Mycelium NEVER does the work itself. It delegates. It routes. It reasons.
 
-### Layer 2: Scout — The Sensor (step-3.5-flash:free)
+### Layer 2: Scout Swarm — The Search Party (step-3.5-flash:free)
 
 **Model**: `kilocode/stepfun/step-3.5-flash:free` (256K context, fast, cheap)
-**Why**: Scout needs speed, not depth. It probes, finds, reports. It doesn't execute.
+**Why**: Scouts need speed, not depth. They probe, find, report. They don't execute.
 
-**Role**: Constantly improves the colony's capabilities and finds revenue.
+**Biological basis**: In nature, a mycelium colony sends hundreds of scouts. They fan out in every direction, each searching for something specific. The ones that find something write pheromone trails back to the colony. The ones that find nothing simply die. No cost. No ceremony.
 
-**Responsibilities**:
-- Monitor free model landscape daily (new models, deprecations, benchmarks)
-- Test new models and update benchmarks with PROOF
-- Find better tools, APIs, integrations
-- Hunt for revenue opportunities ("green leaves")
-- Write all findings to shared memory immediately
-- NEVER execute — only research and report
+**Not one scout — a SWARM.** Scouts run in parallel, each with a narrow focus.
 
-**Key rule**: Never propose a downgrade. Only propose upgrades with evidence.
+**Scout Types:**
+
+| Scout | Hunts For | Feeds | Memory Tag |
+|-------|-----------|-------|-----------|
+| 🔧 **Tool Scout** | New tools, APIs, improvements, better workflows | Dynamic Ants (stronger tools) | `#lesson`, `#shortcut` |
+| 🌿 **Leaf Scout** | Revenue opportunities, clients, products, consulting leads | Mycelium brain (resources to grow) | `#green-leaf` |
+| 📊 **Benchmark Scout** | Model performance, new releases, degradations | Mycelium brain (routing quality) | `#benchmark` |
+| 🔌 **Integration Scout** | New skills (ClawHub), MCP servers, API integrations | Army Ants (broader capability) | `#lesson`, `#shortcut` |
+
+**Scout Rules:**
+1. Parallel by default — never one scout when ten can run faster
+2. Ephemeral — spawn, search, report, die. No permanent scouts.
+3. Narrow focus — each scout searches ONE thing
+4. Write everything — every finding goes to shared memory immediately
+5. No execution — scouts NEVER do the work. They find it. Others do it.
+6. No cost — scouts use the cheapest model (step-3.5-flash)
+7. No ceremony — if a scout finds nothing, it dies silently
+
+**The Food Chain:**
+```
+Scouts find FOOD (tools) → strengthens ANTS → better execution
+Scouts find LEAVES (revenue) → feeds MYCELIUM → brain grows
+Stronger brain → better routing → stronger teams → more results
+                                    ▲
+                                    │
+                             COLONY GROWS
+```
+
+**Scaling**: As many scouts as needed. Daily heartbeat: 3-5. Active revenue hunt: 10-20. Model assessment: 5-10. Emergency: as many as the problem requires.
+
+**See [docs/SCOUT-SWARM.md](SCOUT-SWARM.md) for the full Scout Swarm specification.**
 
 ### Layer 3: Army Ants — The Coordinators (mimo-v2-pro:free)
 

@@ -6,11 +6,19 @@
 
 In nature, mycelium doesn't see — it *routes underground*. The ants are the eyes and hands that sense the world and execute tasks. Pheromone trails are the shared memory that lets the colony function as one organism.
 
+**Scouts fan out in parallel**, each searching for something specific:
+- 🔧 **Tool Scouts** — find food (new tools, improvements) to strengthen the ants
+- 🌿 **Leaf Scouts** — find leaves (revenue opportunities) to feed the mycelium
+- 📊 **Benchmark Scouts** — test models, ensure quality never degrades
+- 🔌 **Integration Scouts** — find new skills, MCP servers, connections
+
+The ones that find something write pheromone trails (shared memory). The ones that find nothing die silently. No cost to the colony.
+
 ```
-Brain (Mycelium)     → mimo-v2-pro:free  → 1M context, NO vision — needs memory, not eyes
-Sensor (Scout)       → step-3.5-flash    → Fast, cheap — probes and reports
-Coordinators (Army)  → mimo-v2-pro:free  → 1M context for registry state
-Workers (Dynamic)    → mimo-v2-omni:free → Vision+tools — the EYES and HANDS
+Brain (Mycelium)       → mimo-v2-pro:free  → 1M context, NO vision — needs memory, not eyes
+Scouts (Swarm)         → step-3.5-flash    → Many in parallel, fast/cheap, narrow focus
+Coordinators (Army)    → mimo-v2-pro:free  → 1M context for registry state
+Workers (Dynamic Ants) → mimo-v2-omni:free → Vision+tools — the EYES and HANDS
 ```
 
 ## Chain of Command
@@ -26,20 +34,24 @@ Workers (Dynamic)    → mimo-v2-omni:free → Vision+tools — the EYES and HAN
     ┌─────────────────────┼─────────────────────┐
     │                     │                     │
     ▼                     ▼                     ▼
-Mycelium              Scout                Army Ants
-(Brain)             (Sensor)            (Coordinators)
-mimo-v2-pro        step-3.5-flash        mimo-v2-pro
-1M context         fast/cheap            1M context
-NO vision          web access            NO vision
-    │                                         │
-    │                                  ┌──────▼──────┐
+Mycelium            SCOUT SWARM           Army Ants
+(Brain)           (many in parallel)     (Coordinators)
+mimo-v2-pro       step-3.5-flash         mimo-v2-pro
+1M context                             1M context
+NO vision                              NO vision
+    │            🔧 Tool Scouts               │
+    │            🌿 Leaf Scouts               │
+    │            📊 Benchmark Scouts          │
+    │            🔌 Integration Scouts        │
+    │                                        │
+    │                                  ┌─────▼──────┐
     │                                  │ Dynamic Ants│
     │                                  │  (Workers)  │
     │                                  │ mimo-v2-omni│
     │                                  │ vision+tools│
-    │                                  └──────┬──────┘
-    │                                         │
-    └─────────────────────────────────────────┘
+    │                                  └─────┬──────┘
+    │                                        │
+    └────────────────────────────────────────┘
            ALL FEED INTO SHARED MEMORY
 ```
 
@@ -47,10 +59,12 @@ NO vision          web access            NO vision
 
 - **178 specialized agent roles** from [agency-agents](https://github.com/msitarzewski/agency-agents)
 - **Biologically correct model assignment** — brain routes, ants see and do
+- **Scout Swarm** — many scouts in parallel, each searching for food or leaves
 - **Shared memory as colony nervous system** — every ant writes findings
+- **The Food Chain** — scouts find tools → ants get stronger → scouts find leaves → brain grows → colony grows
 - **Immutable rules** — never spend money, never downgrade models
-- **Self-improving** — Scout continuously finds better tools and opportunities
-- **Revenue-focused** — every decision asks "does this make money?"
+- **Self-improving** — Scout Swarm continuously finds better tools and opportunities
+- **Revenue-focused** — Leaf Scouts constantly hunt for money-making opportunities
 
 ## Quick Start
 
@@ -79,15 +93,16 @@ Every agent reads and writes shared memory (QMD). This is the colony's nervous s
 | `#mission` | Active work started | Dynamic Ants |
 | `#mission-complete` | Work finished with results | Dynamic Ants |
 | `#pain-point` | Something blocked progress | Any agent |
-| `#lesson` | Durable knowledge gained | Any agent |
-| `#shortcut` | Efficiency trick discovered | Dynamic Ants |
-| `#green-leaf` | Revenue opportunity found | Scout |
-| `#benchmark` | Model performance data | Scout |
+| `#lesson` | Durable knowledge gained | Tool/Integration Scouts |
+| `#shortcut` | Efficiency trick discovered | Tool/Integration Scouts |
+| `#green-leaf` | Revenue opportunity found | Leaf Scouts |
+| `#benchmark` | Model performance data | Benchmark Scouts |
 | `#durable-state` | System snapshot | Mycelium |
 
 **Colony Health Rules:**
-- ✅ Healthy: missions completing, pain points addressed, revenue being hunted
-- ⚠️ Sick: stale missions (>30 min), accumulating pain points, no revenue hunt in 24h
+- ✅ Healthy: missions completing, pain points addressed, leaf scouts finding opportunities
+- ⚠️ Sick: stale missions (>30 min), accumulating pain points, no green-leaf in 24h
+- 🍄 Growing: scouts finding food (tools) → ants getting stronger → brain routing better → colony expanding
 
 ## Agent Registry
 
@@ -135,15 +150,30 @@ See [docs/SKILL-MCP-INTEGRATION.md](docs/SKILL-MCP-INTEGRATION.md) for the full 
 Mycelium networks in nature:
 - Connect trees and share resources underground
 - Route nutrients to where they're needed most
+- Send hundreds of scouts to find food and leaves
 - Self-heal when damaged
-- Grow stronger over time
+- Grow stronger with every successful find
 
 This framework does the same for AI agents:
 - Connects specialized agents to missions
 - Routes the best model to each task
-- Self-improves through Scout research
+- **Swarms scouts in parallel** — tool scouts find food, leaf scouts find revenue
+- Self-improves through Scout discoveries
 - Gets more capable with every mission
 - Shared memory = colony's pheromone trails
+
+### The Food Chain
+
+```
+🔧 Scouts find FOOD (tools, improvements)
+   → strengthens ANTS → better execution
+
+🌿 Scouts find LEAVES (revenue, opportunities)
+   → feeds MYCELIUM → brain grows
+
+💪 Stronger brain → better routing → stronger teams → more results
+   → COLONY GROWS
+```
 
 ## License
 

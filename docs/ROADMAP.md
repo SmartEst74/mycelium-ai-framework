@@ -3,6 +3,8 @@
 ## Phase 1: Foundation (Current)
 - [x] Architecture design (4-layer chain of command)
 - [x] Biological model assignment (brain routes, ants see)
+- [x] Scout Swarm architecture (4 scout types, parallel operation)
+- [x] The Food Chain (scouts find food/leaves → colony grows)
 - [x] 178 agency-agent roles imported
 - [x] Shared memory protocol
 - [x] Python core module
@@ -10,11 +12,15 @@
 - [x] Immutable rules (never spend, never downgrade)
 
 ## Phase 2: Integration (Next)
+- [ ] Scout Swarm implementation (parallel spawning, ephemeral lifecycle)
+- [ ] Tool Scout: automated model/tool discovery
+- [ ] Leaf Scout: revenue opportunity scanning across channels
+- [ ] Benchmark Scout: continuous model quality monitoring
+- [ ] Integration Scout: ClawHub + MCP auto-discovery
 - [ ] Skill & MCP integration architecture
 - [ ] Skill discovery and auto-loading system
 - [ ] MCP server registration and tool binding
 - [ ] ClawHub skill compatibility layer
-- [ ] pi.dev extension package
 - [ ] OpenClaw integration (current platform)
 - [ ] Claude Code integration
 - [ ] Codex integration
