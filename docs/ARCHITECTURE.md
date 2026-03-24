@@ -193,6 +193,63 @@ Two memory systems form a funnel, not a partition:
 
 **The rule:** Don't fill QMD with noise. Let LCM do its job. Only promote to QMD when something is genuinely reusable across sessions.
 
+### The Private Repo — Live Colony Awareness
+
+A private repository acts as the **shared nervous system** for the entire colony. It's not just where memories go — it's the mechanism by which every agent instantly knows what every other agent knows.
+
+```
+  ┌──────────┐    ┌──────────┐    ┌──────────┐
+  │ Dynamic  │    │ Dynamic  │    │ Dynamic  │
+  │ Ant #1   │    │ Ant #2   │    │ Ant #3   │
+  └────┬─────┘    └────┬─────┘    └────┬─────┘
+       │               │               │
+       │    reads &     │    reads &    │
+       │    writes      │    writes     │
+       ▼               ▼               ▼
+  ┌──────────────────────────────────────────┐
+  │         PRIVATE REPO (shared)            │
+  │                                          │
+  │  MEMORY.md        — colony operating     │
+  │                     doctrine & state     │
+  │  memory/           — daily logs, tagged  │
+  │  workspace/        — project files,      │
+  │                     indexed by QMD       │
+  │  QMD index         — searchable across   │
+  │                     everything           │
+  └──────────────────┬───────────────────────┘
+                     │
+                     │  LCM compacts sessions,
+                     │  promotes valuable
+                     │  knowledge here
+                     ▼
+              ┌──────────────┐
+              │  Mycelium    │
+              │  reads this  │
+              │  to route    │
+              └──────────────┘
+```
+
+**How it works:**
+
+1. **LCM compacts** each session's conversations into well-organised summaries with lossless detail retrieval
+2. **Valuable knowledge rises** to the private repo: lessons, pain points, benchmarks, revenue finds, durable state
+3. **Any agent starting work reads the repo first** — it instantly knows the full colony state: what missions are active, what broke recently, what shortcuts exist, what revenue is in motion
+4. **The mycelium reads the repo on every heartbeat** — it sees the full picture and makes informed routing decisions
+5. **All memories are shared** — there is no private agent knowledge. If one ant learns something, the colony learns it
+
+**The result:** No agent ever starts cold. No briefing needed. No repeated mistakes. The colony functions as one organism because every part of it reads the same brain.
+
+**Private repo contents (organised structure):**
+
+| File | Purpose | Updated By |
+|------|---------|-----------|
+| `MEMORY.md` | Colony operating doctrine, hard constraints, current state | Mycelium, any agent |
+| `memory/YYYY-MM-DD.md` | Daily log with timestamped tagged entries | All agents |
+| `AGENTS.md` | Workspace rules, colony memory protocol, operating rules | Mycelium |
+| `SOUL.md` | Colony identity, principles, anti-patterns | Mycelium |
+| `HEARTBEAT.md` | What to check on each heartbeat cycle | Mycelium |
+| Workspace files | Project files, configs, plans — indexed and searchable by QMD | All agents |
+
 ### Shared Memory Tags
 
 Every agent reads and writes shared memory. This is non-negotiable.

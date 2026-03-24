@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Biological model assignment: brain routes, ants see and execute
 - Named memory tools: **QMD** (long-term, curated) and **LCM** (session-level, well-organised, feeds into QMD)
 - Memory funnel model: LCM compacts sessions → only valuable knowledge rises to QMD
+- **Private repo** as live shared awareness layer — all memories shared, any ant knows instantly
 - Scout Swarm: 4 scout types running in parallel (Tool, Leaf, Benchmark, Integration)
 - The Food Chain: scouts find food → ants get stronger → scouts find leaves → brain grows → colony grows
 - 178 agency-agent roles from msitarzewski/agency-agents

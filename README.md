@@ -29,6 +29,28 @@ A funnel, not a partition:
 
 **The rule:** Don't dump noise into QMD. Let LCM do its job. Only promote to QMD when something is genuinely reusable across sessions.
 
+### The Private Repo — Live Shared Awareness
+
+A private repository acts as the colony's **shared nervous system**. Not just storage — a real-time broadcast layer where every agent instantly knows what every other agent knows.
+
+```
+  Ant #1 ──┐    Ant #2 ──┐    Ant #3 ──┐
+           │             │             │
+           ▼             ▼             ▼
+    ┌─────────────────────────────────┐
+    │       PRIVATE REPO             │
+    │  MEMORY.md    — doctrine/state │
+    │  memory/      — daily logs     │
+    │  workspace/   — indexed by QMD │
+    └──────────────┬─────────────────┘
+                   │  LCM promotes
+                   │  valuable knowledge
+                   ▼
+              MYCELIUM reads → routes
+```
+
+**Any ant starting work reads the repo first.** It instantly knows: what missions are active, what broke recently, what shortcuts exist, what revenue is in motion. No briefing needed. The colony functions as one organism because every part of it reads the same brain.
+
 ```
 Brain (Mycelium)       → mimo-v2-pro:free  → 1M context, NO vision — needs memory, not eyes
 Scouts (Swarm)         → step-3.5-flash    → Many in parallel, fast/cheap, narrow focus

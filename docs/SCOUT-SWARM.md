@@ -180,7 +180,7 @@ Scouts write into the memory funnel:
 
 Scouts don't decide what's valuable. They dump into LCM. The session compaction process surfaces what matters. Only then does it rise to QMD.
 
-Every scout writes to whichever system fits. The colony reads both.
+**The private repo is the broadcast layer.** Any scout that discovers something writes it to the shared repo. The mycelium reads the repo on every heartbeat. Any ant starting a new mission reads it first. All memories are shared — if one scout learns something, the whole colony learns it instantly. No briefing. No repeated mistakes.
 
 ## Shared Memory Tags (Scout-Specific)
 
