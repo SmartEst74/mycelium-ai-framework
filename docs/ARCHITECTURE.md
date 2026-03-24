@@ -5,23 +5,32 @@
 In nature:
 - **Mycelium** = underground network that processes nutrients, routes signals, manages state
 - **Ants** = above-ground eyes and hands that sense the world and execute tasks
-- **Pheromone trails** = shared memory that lets the colony function as one organism
+- **Pheromone trails** = recent signals that guide ant behavior before being absorbed into the network
+- **Mycelium network itself** = long-term memory — accumulated knowledge that persists across seasons
 
 In this framework:
 - **Mycelium** = reasoning brain that routes, plans, delegates (never sees, never executes)
 - **Dynamic Ants** = eyes and hands that see (vision) and execute (tools)
-- **Shared Memory (QMD)** = pheromone trails — every ant writes findings, the colony reads them
+- **LCM** = pheromone trails — recent conversation context, compacted but lossless, with retrieval tools
+- **QMD** = mycelium network — long-term searchable memory across files, transcripts, and daily logs
 
 ## Chain of Command
 
 ```
-                    ┌─────────────────────────────┐
-                    │     SHARED MEMORY (QMD)     │
-                    │  #mission  #mission-complete │
-                    │  #lesson   #pain-point       │
-                    │  #shortcut #green-leaf        │
-                    └──────────┬──────────────────┘
-                               │
+                    ┌─────────────────────────────────────┐
+                    │         COLONY MEMORY               │
+                    │  ┌─────────────────┬─────────────┐  │
+                    │  │  QMD (long-term) │ LCM (recent)│  │
+                    │  │  files, logs,    │ compacted   │  │
+                    │  │  transcripts,    │ context,    │  │
+                    │  │  daily memory    │ grep/describe│  │
+                    │  └────────┬────────┴──────┬──────┘  │
+                    │           │               │         │
+                    │  #mission  #mission-complete        │
+                    │  #lesson   #pain-point               │
+                    │  #shortcut #green-leaf                │
+                    └───────────┬──────────────────────────┘
+                                │
          ┌─────────────────────┼─────────────────────┐
          │                     │                     │
   ┌──────▼──────┐   ┌─────────▼──────────┐   ┌──────▼──────┐
@@ -153,9 +162,20 @@ Stronger brain → better routing → stronger teams → more results
 
 **Key rule**: One task. One role. One model. One report. Write to memory. Done.
 
-## Shared Memory Protocol — The Colony's Nervous System
+## Shared Memory — The Colony's Nervous System
 
-**Every agent reads and writes shared memory. This is non-negotiable.**
+Two memory systems work together, each handling a different layer of recall:
+
+| Tool | Purpose | Analogy |
+|------|---------|---------|
+| **QMD** | Long-term memory — searchable index of files, transcripts, daily logs. Durable knowledge persists here across sessions. | The mycelium network underground — stores and retrieves accumulated knowledge |
+| **LCM** | Context compaction — preserves recent raw detail and layered summaries so specifics are not lost when conversations get long. Provides `lcm_grep`, `lcm_describe`, `lcm_expand` for retrieval of compacted context. | The pheromone trails — recent signals that haven't yet been absorbed into the network |
+
+**Together, QMD + LCM form the colony's complete memory.** QMD is what the colony *knows*. LCM is what the colony *remembers from recent conversations*. Every agent reads both before starting work.
+
+### Shared Memory Tags
+
+Every agent reads and writes shared memory. This is non-negotiable.
 
 ### What Goes In Shared Memory
 

@@ -4,7 +4,7 @@
 
 ## Biological Model
 
-In nature, mycelium doesn't see — it *routes underground*. The ants are the eyes and hands that sense the world and execute tasks. Pheromone trails are the shared memory that lets the colony function as one organism.
+In nature, mycelium doesn't see — it *routes underground*. The ants are the eyes and hands that sense the world and execute tasks. The mycelium network itself is long-term memory. Pheromone trails are recent signals that guide ant behavior before being absorbed.
 
 **Scouts fan out in parallel**, each searching for something specific:
 - 🔧 **Tool Scouts** — find food (new tools, improvements) to strengthen the ants
@@ -13,6 +13,15 @@ In nature, mycelium doesn't see — it *routes underground*. The ants are the ey
 - 🔌 **Integration Scouts** — find new skills, MCP servers, connections
 
 The ones that find something write pheromone trails (shared memory). The ones that find nothing die silently. No cost to the colony.
+
+### Memory Tools
+
+| Tool | Purpose | Analogy |
+|------|---------|---------|
+| **QMD** | Long-term memory — searchable index of files, transcripts, daily logs | The mycelium network — accumulated knowledge that persists |
+| **LCM** | Context compaction — lossless recent detail with `lcm_grep`, `lcm_describe`, `lcm_expand` | Pheromone trails — recent signals not yet absorbed into the network |
+
+Together, QMD + LCM form the colony's complete memory.
 
 ```
 Brain (Mycelium)       → mimo-v2-pro:free  → 1M context, NO vision — needs memory, not eyes
@@ -24,12 +33,18 @@ Workers (Dynamic Ants) → mimo-v2-omni:free → Vision+tools — the EYES and H
 ## Chain of Command
 
 ```
-         ┌──────────────────────────────────────┐
-         │       SHARED MEMORY (QMD)            │
-         │  📋 #mission    ✅ #mission-complete  │
-         │  ⚠️ #pain-point 💡 #shortcut          │
-         │  🌿 #green-leaf 📊 #benchmark         │
-         └────────────────┬─────────────────────┘
+         ┌──────────────────────────────────────────────┐
+         │            COLONY MEMORY                     │
+         │  ┌──────────────────┬────────────────────┐   │
+         │  │ QMD (long-term)  │  LCM (recent)      │   │
+         │  │ files, logs,     │  compacted context, │   │
+         │  │ transcripts,     │  grep/describe/     │   │
+         │  │ daily memory     │  expand             │   │
+         │  └────────┬─────────┴─────────┬──────────┘   │
+         │  📋 #mission    ✅ #mission-complete          │
+         │  ⚠️ #pain-point 💡 #shortcut                  │
+         │  🌿 #green-leaf 📊 #benchmark                 │
+         └────────────────┬─────────────────────────────┘
                           │
     ┌─────────────────────┼─────────────────────┐
     │                     │                     │

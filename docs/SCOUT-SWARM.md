@@ -165,6 +165,20 @@ Stronger teams produce MORE RESULTS
 6. **No cost** — Scouts use the cheapest/fastest model available (step-3.5-flash)
 7. **No ceremony** — If a scout finds nothing, it dies silently. No report needed.
 
+## Shared Memory — Where Scouts Write
+
+Scouts write to two memory systems, each for different recall patterns:
+
+| Memory | What Goes Here | Retrieval |
+|--------|---------------|-----------|
+| **QMD** | Durable knowledge — `#lesson`, `#green-leaf`, `#benchmark` | Searchable across sessions, persists forever |
+| **LCM** | Recent findings — `#shortcut`, `#pain-point` | `lcm_grep`, `lcm_describe`, `lcm_expand` from compacted context |
+
+**QMD** = the mycelium network. Long-term memory that grows with the colony.
+**LCM** = pheromone trails. Recent signals that haven't yet been absorbed into the network.
+
+Every scout writes to whichever system fits. The colony reads both.
+
 ## Shared Memory Tags (Scout-Specific)
 
 | Tag | Scout Type | Purpose |
