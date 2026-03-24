@@ -114,6 +114,22 @@ Every agent reads and writes shared memory (QMD). This is the colony's nervous s
 5. Free tier only. We make money, not spend it.
 6. Keep benchmarks current — test monthly minimum
 
+## Skill & MCP Integration
+
+Mycelium does NOT replace skills or MCP. It **orchestrates** them.
+
+- **Skills** (AgentSkills/ClawHub) → Capability packages. Users plugin their own. Mycelium wraps and routes.
+- **MCP Tools** (Model Context Protocol) → External integrations. Dynamic Ants bind MCP tools on demand.
+- **Models** (any provider) → Routing layer picks the best model for each task.
+
+Anyone can plugin:
+- 🧩 **Skills** — Drop a SKILL.md + files, auto-discovered
+- 🔌 **MCP Servers** — Configure connection, capabilities discovered
+- 🤖 **Models** — Add provider config, Scout benchmarks it
+- 🐜 **Agent Roles** — Add role definition to registry
+
+See [docs/SKILL-MCP-INTEGRATION.md](docs/SKILL-MCP-INTEGRATION.md) for the full integration architecture.
+
 ## Why Mycelium?
 
 Mycelium networks in nature:

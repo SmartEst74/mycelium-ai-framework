@@ -10,6 +10,10 @@
 - [x] Immutable rules (never spend, never downgrade)
 
 ## Phase 2: Integration (Next)
+- [ ] Skill & MCP integration architecture
+- [ ] Skill discovery and auto-loading system
+- [ ] MCP server registration and tool binding
+- [ ] ClawHub skill compatibility layer
 - [ ] pi.dev extension package
 - [ ] OpenClaw integration (current platform)
 - [ ] Claude Code integration
