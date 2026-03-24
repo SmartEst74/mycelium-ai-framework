@@ -10,22 +10,46 @@ rules:
   models:
     - NEVER downgrade models without Jon's approval
     - Only upgrade with PROOF (benchmark, test results)
-    - Primary model must have: vision + tools + reasoning
     - Keep benchmarks current (test monthly minimum)
     - If primary model becomes unavailable, alert Jon immediately
+    - Mycelium uses mimo-v2-pro (brain needs memory, not eyes)
+    - Dynamic Ants use mimo-v2-omni (ants ARE the eyes and hands)
+    - Scout uses step-3.5-flash (fast probing, never executes)
 
   architecture:
     - Mycelium NEVER executes side-effects (delegation only)
+    - Mycelium NEVER uses vision (ants see, brain routes)
     - Scout NEVER executes (research only)
     - Army Ants build teams (don't do the work)
     - Dynamic Ants do focused work (one task, one role, one model)
-    - Each layer reports UP, never sideways
+    - Each layer reports UP to Mycelium via shared memory
+    - No agent talks sideways — everything goes through shared memory
 
   memory:
-    - All discoveries go into shared memory IMMEDIATELY
-    - Lessons tagged with #lesson, pain points with #pain-point
-    - Missions tracked with #mission / #mission-complete
-    - Never lose a lesson. If something went wrong, capture the fix.
+    - ALL agents read shared memory BEFORE starting work
+    - ALL agents write to shared memory DURING and AFTER work
+    - Dynamic Ants write #mission when starting
+    - Dynamic Ants write #mission-complete when done (with results)
+    - Dynamic Ants write #pain-point when blocked
+    - Dynamic Ants write #shortcut when they find a better way
+    - Scout writes #green-leaf for every revenue opportunity
+    - Scout writes #benchmark after every model test
+    - Mycelium writes #durable-state on every heartbeat
+    - NEVER lose a lesson. If something went wrong, capture the fix.
+
+  shared-memory-health:
+    - Colony is HEALTHY when:
+      * #mission entries have recent timestamps
+      * #mission-complete entries outnumber #mission
+      * #pain-point entries are being addressed
+      * #green-leaf entries exist (revenue being hunted)
+      * #benchmark entries are recent
+    - Colony is SICK when:
+      * #mission entries go stale (>30 min no update)
+      * #pain-point entries accumulate without #lesson resolutions
+      * No #green-leaf in 24h (revenue hunt stopped)
+      * No #benchmark in 7 days (model quality unchecked)
+    - Mycelium checks colony health on every heartbeat
 
   environment:
     - Check system health every 15 minutes (Mother Brain)

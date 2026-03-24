@@ -1,103 +1,189 @@
 # Mycelium AI Framework — Architecture
 
+## Biological Analogy
+
+In nature:
+- **Mycelium** = underground network that processes nutrients, routes signals, manages state
+- **Ants** = above-ground eyes and hands that sense the world and execute tasks
+- **Pheromone trails** = shared memory that lets the colony function as one organism
+
+In this framework:
+- **Mycelium** = reasoning brain that routes, plans, delegates (never sees, never executes)
+- **Dynamic Ants** = eyes and hands that see (vision) and execute (tools)
+- **Shared Memory (QMD)** = pheromone trails — every ant writes findings, the colony reads them
+
 ## Chain of Command
 
 ```
-Mycelium (Brain)
-  ├── Scout (Researcher)
-  │     ├── Better models
-  │     ├── Better tools
-  │     ├── Better reasoning
-  │     ├── Better memory
-  │     ├── Better environment control
-  │     └── Better money-making (find green leaves)
-  │
-  ├── Army Ants (Team Builders)
-  │     ├── Picks agency-agent roles from registry
-  │     ├── Assigns best model for each role
-  │     ├── Orchestrates parallel or serial execution
-  │     └── Reports results to Mycelium
-  │
-  └── Dynamic Ants (Workers)
-        ├── Focused single-task role
-        ├── Best model matched to task
-        ├── Agency-agent persona applied
-        └── Completes task, reports back to Army
+                    ┌─────────────────────────────┐
+                    │     SHARED MEMORY (QMD)     │
+                    │  #mission  #mission-complete │
+                    │  #lesson   #pain-point       │
+                    │  #shortcut #green-leaf        │
+                    └──────────┬──────────────────┘
+                               │
+         ┌─────────────────────┼─────────────────────┐
+         │                     │                     │
+  ┌──────▼──────┐      ┌──────▼──────┐      ┌──────▼──────┐
+  │  Mycelium   │      │   Scout     │      │ Army Ants   │
+  │  (Brain)    │      │ (Researcher)│      │ (Builders)  │
+  │ mimo-v2-pro │      │step-3.5-flash│     │ mimo-v2-pro │
+  │ 1M context  │      │ fast/cheap  │      │ 1M context  │
+  │ NO vision   │      │ web access  │      │ NO vision   │
+  └──────┬──────┘      └─────────────┘      └──────┬──────┘
+         │                                          │
+         │                                   ┌──────▼──────┐
+         │                                   │ Dynamic Ants│
+         │                                   │  (Workers)  │
+         │                                   │ mimo-v2-omni│
+         │                                   │ vision+tools│
+         │                                   └──────┬──────┘
+         │                                          │
+         └──────────────────────────────────────────┘
+                    ALL FEED INTO SHARED MEMORY
 ```
 
 ## Layer Details
 
-### Layer 1: Mycelium (Reasoning + Control)
-- **Role**: Central brain. Never executes side-effects.
-- **Responsibilities**: 
-  - Receives missions from Jon or heartbeat
-  - Delegates to Scout for research and improvement
-  - Delegates to Army for execution
-  - Monitors quality, prevents downgrades
-  - Maintains benchmarks and model selection
-  - Routes to best available model based on task type
-- **Model**: Best reasoning model available (currently mimo-v2-omni:free)
-- **Key rule**: Mycelium NEVER does the work itself. It delegates.
+### Layer 1: Mycelium — The Brain (mimo-v2-pro:free)
 
-### Layer 2: Scout (Researcher + Improver)
-- **Role**: Constantly improves the colony's capabilities
-- **Responsibilities**:
-  - Monitor free model landscape daily
-  - Test new models and update benchmarks
-  - Find better tools, APIs, integrations
-  - Improve agent control patterns
-  - Improve memory and environment control
-  - Hunt for revenue opportunities ("green leaves")
-  - Report findings to Mycelium
-- **Model**: Fast model for research (step-3.5-flash:free or similar)
-- **Key rule**: Never propose a downgrade. Only propose upgrades with evidence.
+**Model**: `xiaomi/mimo-v2-pro:free` (1M context, text+reasoning, NO vision)
+**Why**: The brain doesn't need eyes — it needs memory. 1M context holds the full colony state: registry, benchmarks, active missions, model landscape, revenue pipeline.
 
-### Layer 3: Army Ants (Team Builders)
-- **Role**: Build execution teams from agency-agent registry
-- **Responsibilities**:
-  - Receive mission from Mycelium
-  - Select appropriate agency-agent roles from registry
-  - Match best model to each role based on benchmarks
-  - Decide parallel vs serial execution
-  - Spawn Dynamic Ants for each task
-  - Monitor progress, re-route if blocked
-  - Report results to Mycelium
-- **Model**: Best orchestration model available
-- **Key rule**: Use agency-agent registry. Don't reinvent roles.
+**Role**: Central reasoning and routing. Never executes. Never sees.
 
-### Layer 4: Dynamic Ants (Workers)
-- **Role**: Single-task focused execution
-- **Responsibilities**:
-  - Take one specific task from Army Ant
-  - Apply agency-agent persona/role
-  - Use assigned model (matched to task type)
-  - Complete task with full focus
-  - Report result back to Army Ant
-  - Die after completion (ephemeral)
-- **Model**: Best model for the specific task type:
-  - Code → qwen3-coder (if available) or best coding model
-  - Writing → best creative model
-  - Research → fastest model with web access
-  - Vision → mimo-v2-omni:free (only free vision model)
-- **Key rule**: One task. One role. One model. One report. Done.
+**Responsibilities**:
+- Receives missions from Jon or heartbeat
+- Reads shared memory for colony state (active missions, pain points, recent completions)
+- Delegates to Scout for research and improvement
+- Delegates to Army Ants for execution
+- Monitors quality, prevents downgrades
+- Maintains benchmarks and model selection
+- Routes to best available model based on task type
+- Writes mission plans and decisions to shared memory
 
-## Model Assignment Matrix
+**Key rule**: Mycelium NEVER does the work itself. It delegates. It routes. It reasons.
 
-| Task Type | Best Free Model | Fallback |
-|-----------|----------------|----------|
-| Vision + Tools | mimo-v2-omni:free (kilocode) | gpt-5-mini |
-| Code Generation | mimo-v2-pro:free (kilocode) | step-3.5-flash:free |
-| Reasoning | mimo-v2-omni:free (kilocode) | glm-4.5-air:free |
-| Creative Writing | mimo-v2-pro:free (kilocode) | step-3.5-flash:free |
-| Fast Research | step-3.5-flash:free (kilocode) | mimo-v2-pro:free |
-| Web Scraping | mimo-v2-pro:free (kilocode) | glm-4.5-air:free |
+### Layer 2: Scout — The Sensor (step-3.5-flash:free)
+
+**Model**: `kilocode/stepfun/step-3.5-flash:free` (256K context, fast, cheap)
+**Why**: Scout needs speed, not depth. It probes, finds, reports. It doesn't execute.
+
+**Role**: Constantly improves the colony's capabilities and finds revenue.
+
+**Responsibilities**:
+- Monitor free model landscape daily (new models, deprecations, benchmarks)
+- Test new models and update benchmarks with PROOF
+- Find better tools, APIs, integrations
+- Hunt for revenue opportunities ("green leaves")
+- Write all findings to shared memory immediately
+- NEVER execute — only research and report
+
+**Key rule**: Never propose a downgrade. Only propose upgrades with evidence.
+
+### Layer 3: Army Ants — The Coordinators (mimo-v2-pro:free)
+
+**Model**: `xiaomi/mimo-v2-pro:free` (1M context, text+reasoning)
+**Why**: Army Ants need the full registry (178 roles), model benchmarks, and mission context to build teams. They don't need vision — they delegate vision to Dynamic Ants.
+
+**Role**: Build execution teams from agency-agent registry.
+
+**Responsibilities**:
+- Receive mission from Mycelium
+- Read shared memory for relevant lessons, pain points, shortcuts
+- Select appropriate agency-agent roles from registry
+- Match best model to each role based on benchmarks
+- Decide parallel vs serial execution
+- Spawn Dynamic Ants for each task
+- Monitor progress, re-route if blocked
+- Write team composition and progress to shared memory
+- Report results to Mycelium
+
+**Key rule**: Use agency-agent registry. Don't reinvent roles. Write everything to memory.
+
+### Layer 4: Dynamic Ants — The Eyes and Hands (mimo-v2-omni:free)
+
+**Model**: `xiaomi/mimo-v2-omni:free` (262K context, vision+tools+reasoning)
+**Why**: This is the ONLY free model with vision+tools. The ants ARE the eyes that see the world and the hands that execute tasks. They feed back to the superior brain through shared memory.
+
+**Role**: Single-task focused execution with full sensory capability.
+
+**Responsibilities**:
+- Take one specific task from Army Ant
+- Apply agency-agent persona/role
+- USE VISION to see the web, UIs, documents, images
+- USE TOOLS to execute (write code, scrape web, edit files)
+- Write progress to shared memory at each step:
+  - Started → `#mission` with task description
+  - Pain point → `#pain-point` with what broke
+  - Shortcut found → `#shortcut` with the trick
+  - Completed → `#mission-complete` with result
+- Report result back to Army Ant
+- Die after completion (ephemeral)
+
+**Key rule**: One task. One role. One model. One report. Write to memory. Done.
+
+## Shared Memory Protocol — The Colony's Nervous System
+
+**Every agent reads and writes shared memory. This is non-negotiable.**
+
+### What Goes In Shared Memory
+
+| Tag | Purpose | Written By | Read By |
+|-----|---------|-----------|---------|
+| `#mission` | Active work in progress | Dynamic Ants, Army Ants | Mycelium, Scout |
+| `#mission-complete` | Finished work with results | Dynamic Ants | Mycelium, Scout |
+| `#pain-point` | Something that broke or blocked | Any agent | All agents |
+| `#lesson` | Durable knowledge gained | Any agent | All agents |
+| `#shortcut` | Efficiency trick discovered | Dynamic Ants | All agents |
+| `#green-leaf` | Revenue opportunity found | Scout | Mycelium |
+| `#benchmark` | Model performance data | Scout | Mycelium, Army Ants |
+| `#durable-state` | Current system state snapshot | Mycelium | All agents |
+
+### Memory Rules
+
+1. **Every Dynamic Ant writes `#mission` when starting work**
+2. **Every Dynamic Ant writes `#mission-complete` when done** (with: what was done, what worked, what didn't)
+3. **Every Dynamic Ant writes `#pain-point` if something blocks progress**
+4. **Every Dynamic Ant writes `#shortcut` if it finds a better way**
+5. **Every agent reads shared memory BEFORE starting work** (avoid repeating mistakes)
+6. **Mycelium reads shared memory on every heartbeat** (colony status)
+7. **Scout writes `#benchmark` after every model test**
+8. **Scout writes `#green-leaf` for every revenue opportunity**
+
+### Instant Colony Visibility
+
+The colony is healthy when:
+- `#mission` entries have recent timestamps (work is happening)
+- `#mission-complete` entries outnumber `#mission` (work is finishing)
+- `#pain-point` entries are being addressed (not accumulating)
+- `#green-leaf` entries exist (revenue is being hunted)
+- `#benchmark` entries are recent (model quality is being monitored)
+
+The colony is SICK when:
+- `#mission` entries go stale (>30 min with no update)
+- `#pain-point` entries accumulate without `#lesson` resolutions
+- No `#green-leaf` entries in 24h (revenue hunt stopped)
+- No `#benchmark` entries in 7 days (model quality unchecked)
+
+## Model Assignment Matrix (Corrected)
+
+| Role | Model | Context | Capabilities | Why |
+|------|-------|---------|-------------|-----|
+| **Mycelium** (Brain) | mimo-v2-pro:free | 1M | text, reasoning | Needs memory, not eyes |
+| **Scout** (Researcher) | step-3.5-flash:free | 256K | text, tools | Needs speed, not depth |
+| **Army Ants** (Coordinators) | mimo-v2-pro:free | 1M | text, reasoning | Needs registry context |
+| **Dynamic Ants** (Workers) | mimo-v2-omni:free | 262K | vision, tools, reasoning | Needs eyes and hands |
+
+**Fallback chain** (if primary unavailable):
+mimo-v2-omni → mimo-v2-pro → step-3.5-flash → glm-4.5-air → gpt-5-mini
 
 **RULE: Never downgrade models. Only upgrade with proof.**
-**RULE: Free models only. No spend. We make money, not spend it.**
+**RULE: Free models only. We make money, not spend it.**
 
 ## Agency-Agent Registry
 
-179 specialized agent roles from `msitarzewski/agency-agents`:
+178 specialized agent roles from `msitarzewski/agency-agents`:
 
 | Department | Count | Key Roles |
 |-----------|-------|-----------|
@@ -134,5 +220,5 @@ This framework is implemented as:
 - `scout/` — Research and improvement modules
 - `army/` — Team building and orchestration
 - `dynamic/` — Worker creation and management
-- `registry/` — Agency-agent role registry
+- `registry/` — Agency-agent role registry (178 roles)
 - `config/` — Model assignments, benchmarks, rules

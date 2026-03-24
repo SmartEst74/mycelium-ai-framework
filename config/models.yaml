@@ -1,55 +1,78 @@
-# Model Assignment Matrix
+# Model Assignment Matrix — Mycelium AI Framework
+#
+# Biological model:
+#   Brain (Mycelium) = mimo-v2-pro (1M context, NO vision — needs memory not eyes)
+#   Eyes/Hands (Dynamic Ants) = mimo-v2-omni (vision+tools — they see and do)
+#   Sensors (Scout) = step-3.5-flash (fast/cheap — probes and reports)
+#   Coordinators (Army Ants) = mimo-v2-pro (1M context — needs registry state)
+#
 # RULE: Never downgrade. Only upgrade with proof.
 # RULE: Free models only. We make money, not spend it.
 
-models:
-  # Tier 1: Best available free
-  primary:
+roles:
+  mycelium:
+    id: xiaomi/mimo-v2-pro:free
+    provider: kilocode
+    capabilities: [text, tools, reasoning]
+    context: 1048576
+    cost: 0
+    notes: "Brain: 1M context for full colony state. NO vision needed — delegates seeing to ants."
+
+  scout:
+    id: stepfun/step-3.5-flash:free
+    provider: kilocode
+    capabilities: [text, tools]
+    context: 262144
+    cost: 0
+    notes: "Sensor: fast and cheap. Probes, finds, reports. Never executes."
+
+  army:
+    id: xiaomi/mimo-v2-pro:free
+    provider: kilocode
+    capabilities: [text, tools, reasoning]
+    context: 1048576
+    cost: 0
+    notes: "Coordinators: need 1M context for registry + mission state. Delegate vision to ants."
+
+  dynamic:
     id: xiaomi/mimo-v2-omni:free
     provider: kilocode
     capabilities: [text, vision, tools, reasoning]
     context: 262144
     cost: 0
-    notes: ONLY free model with vision + tools
+    notes: "Eyes and hands: ONLY free model with vision+tools. Sees the world, does the work."
 
-  # Tier 2: Strong text-only free
-  fallback_text:
-    - id: xiaomi/mimo-v2-pro:free
-      provider: kilocode
-      capabilities: [text, tools, reasoning]
-      context: 1048576
-      cost: 0
-      notes: 1M context, no vision
+# Fallback chain (if primary unavailable)
+fallbacks:
+  - id: xiaomi/mimo-v2-omni:free
+    capabilities: [text, vision, tools, reasoning]
+    context: 262144
+  - id: xiaomi/mimo-v2-pro:free
+    capabilities: [text, tools, reasoning]
+    context: 1048576
+  - id: stepfun/step-3.5-flash:free
+    capabilities: [text, tools]
+    context: 262144
+  - id: z-ai/glm-4.5-air:free
+    capabilities: [text, tools, reasoning]
+    context: 131072
+    provider: openrouter
+  - id: github-copilot/gpt-5-mini
+    capabilities: [text, vision, tools, reasoning]
+    cost: paid
+    notes: "Last resort only. Spend money only with Jon's explicit approval."
 
-    - id: stepfun/step-3.5-flash:free
-      provider: kilocode
-      capabilities: [text, tools]
-      context: 262144
-      cost: 0
-
-    - id: z-ai/glm-4.5-air:free
-      provider: openrouter
-      capabilities: [text, tools, reasoning]
-      context: 131072
-      cost: 0
-
-  # Tier 3: Paid fallback (last resort)
-  fallback_paid:
-    - id: github-copilot/gpt-5-mini
-      provider: github-copilot
-      capabilities: [text, vision, tools, reasoning]
-      cost: paid
-      notes: Last resort. Use sparingly.
-
-# Task type → model mapping
+# Task type → model mapping (for Dynamic Ants)
 task_matrix:
   vision:
     primary: xiaomi/mimo-v2-omni:free
     fallback: github-copilot/gpt-5-mini
+    notes: "Only free vision model. Non-negotiable."
 
   code:
     primary: xiaomi/mimo-v2-omni:free
     fallback: xiaomi/mimo-v2-pro:free
+    notes: "Omni for vision+tools. Pro for pure text coding."
 
   reasoning:
     primary: xiaomi/mimo-v2-omni:free
@@ -62,6 +85,7 @@ task_matrix:
   research:
     primary: stepfun/step-3.5-flash:free
     fallback: xiaomi/mimo-v2-pro:free
+    notes: "Scout model for research tasks. Fast and cheap."
 
   web_scraping:
     primary: xiaomi/mimo-v2-omni:free
