@@ -1,0 +1,39 @@
+#!/bin/bash
+# Mycelium Pre-Commit Hook — File Placement Enforcement
+# Install: copy to .git/hooks/pre-commit and chmod +x
+# Or: cp scripts/pre-commit .git/hooks/pre-commit
+
+ERRORS=""
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+
+for FILE in $STAGED_FILES; do
+    BASENAME=$(basename "$FILE")
+
+    # Rule 1: Project docs must NOT be in memory/
+    if [[ "$FILE" == memory/* ]] && [[ "$BASENAME" != "MEMORY.md" ]] && ! [[ "$BASENAME" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}\.md$ ]]; then
+        if echo "$BASENAME" | grep -iqE '(plan|design|sre|architecture|spec|rfc|roadmap)'; then
+            ERRORS+="❌ REJECTED: '$FILE' looks like a project doc.\n"
+            ERRORS+="   Project docs belong in the PROJECT REPO (e.g., <project>/docs/).\n"
+            ERRORS+="   memory/ is for colony knowledge only (#lesson, #benchmark, #durable-state).\n\n"
+        fi
+    fi
+
+    # Rule 2: Sub-agents must not modify MEMORY.md
+    if [[ "$FILE" == "MEMORY.md" ]]; then
+        COMMIT_MSG=$(cat .git/COMMIT_EDITMSG 2>/dev/null || echo "")
+        if echo "$COMMIT_MSG" | grep -iqE '(sub.?agent|forge|scout|army|auto|bot)'; then
+            ERRORS+="❌ REJECTED: Sub-agents must NOT modify MEMORY.md directly.\n"
+            ERRORS+="   Write to daily memory file. Mycelium reviews and updates MEMORY.md.\n\n"
+        fi
+    fi
+done
+
+if [[ -n "$ERRORS" ]]; then
+    echo -e "\n🐜 MYCELIUM COMMIT GUARD\n"
+    echo -e "$ERRORS"
+    echo "Fix these issues and try again."
+    echo "Emergency bypass (requires Jon's permission): git commit --no-verify"
+    exit 1
+fi
+
+exit 0

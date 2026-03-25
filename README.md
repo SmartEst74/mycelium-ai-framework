@@ -120,6 +120,16 @@ Engineering (23), Marketing (27), Sales (8), Design (8), Specialized (27), Testi
 
 **Sick:** stale missions (>30 min), accumulating pain points, no revenue hunt in 24h, no benchmarks in 7 days.
 
+## Enforcement
+
+Rules without enforcement are suggestions. The framework includes:
+
+- **Pre-commit git hook** — blocks commits that put project docs in `memory/`
+- **Write validator script** — agents call before writing to check correct location
+- **Hard rules in `config/rules.yaml`** — machine-parseable enforcement rules
+
+See [docs/ENFORCEMENT.md](docs/ENFORCEMENT.md) for details.
+
 ## Why Mycelium?
 
 - Connects specialized agents to missions

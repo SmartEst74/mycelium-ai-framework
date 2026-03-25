@@ -25,6 +25,44 @@ rules:
     - Each layer reports UP to Mycelium via shared memory
     - No agent talks sideways — everything goes through shared memory
 
+  enforcement:
+    description: >
+      These rules are enforced by git hooks and validation scripts.
+      Violations cause commit failures or write rejections. Not suggestions.
+    chain_of_command:
+      - Mycelium THINKS, PLANS, ORCHESTRATES. It does NOT execute leaf work.
+      - If the main agent is doing the work itself, it is VIOLATING the chain.
+      - Main agent delegates → Scouts explore → Generals execute → Main agent remembers.
+    file_placement:
+      description: "WHERE content goes determines IF it can be found later."
+      project_docs:
+        target: "project repository (e.g., SmartEst74/<project>/docs/)"
+        examples: ["SRE plans", "architecture docs", "design docs", "specs", "RFCs", "roadmaps"]
+        NOT_in: "shared memory (memory/)"
+      colony_knowledge:
+        target: "memory/YYYY-MM-DD.md with proper tags"
+        tags:
+          reusable_knowledge: "#lesson"
+          friction_gotcha: "#pain-point"
+          efficiency_pattern: "#shortcut"
+          revenue_opportunity: "#green-leaf"
+          model_benchmark: "#benchmark"
+          system_state: "#durable-state"
+      mission_tracking:
+        target: "memory/YYYY-MM-DD.md with tags"
+        tags:
+          active_work: "#mission"
+          completed_work: "#mission-complete"
+      main_memory:
+        rule: "Only the Mycelium (main agent) updates MEMORY.md after review."
+        forbidden: "Sub-agents must NEVER write to MEMORY.md directly."
+      temp_files:
+        target: "/tmp or workspace/tmp"
+        NOT_in: "shared memory (memory/)"
+    enforcement_hooks:
+      pre_commit: ".git/hooks/pre-commit — blocks violations at commit time"
+      validate_write: "scripts/validate-write.sh — advisory check before writing"
+
   memory:
     - ALL agents read shared memory BEFORE starting work
     - ALL agents write to shared memory DURING and AFTER work
