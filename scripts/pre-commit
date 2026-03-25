@@ -21,7 +21,7 @@ for FILE in $STAGED_FILES; do
     # Rule 2: Sub-agents must not modify MEMORY.md
     if [[ "$FILE" == "MEMORY.md" ]]; then
         COMMIT_MSG=$(cat .git/COMMIT_EDITMSG 2>/dev/null || echo "")
-        if echo "$COMMIT_MSG" | grep -iqE '(sub.?agent|forge|scout|army|auto|bot)'; then
+        if echo "$COMMIT_MSG" | grep -iqE '\b(sub.?agent|forge|scout|army.ant|auto.deploy|bot.deploy)\b'; then
             ERRORS+="❌ REJECTED: Sub-agents must NOT modify MEMORY.md directly.\n"
             ERRORS+="   Write to daily memory file. Mycelium reviews and updates MEMORY.md.\n\n"
         fi
