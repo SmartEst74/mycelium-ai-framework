@@ -50,6 +50,24 @@ Knowledge persists across sessions, days, weeks. A lesson learned in March is st
 **Solo agent**: Forgets everything between sessions. Re-learns constantly.
 **Colonial agent**: Knowledge accumulates. The colony gets smarter over time.
 
+## The Technical Innovation: Event Sourcing + Replay
+
+The Rhizomorph is not a passive database. It's an **event-sourced nervous system**:
+
+1. Every write is an **event** emitted on a WebSocket bus
+2. Events are stored in an **append-only log** (LCM SQLite)
+3. **Projections** (QMD markdown files) are built by replaying events
+4. Any agent can **replay the full event stream** to rebuild state
+5. The entire colony can be **reconstructed from scratch** from events alone
+
+This pattern (proven in distributed systems like Kafka) brings to AI agents:
+- **Disaster recovery**: rebuild from backups + replay
+- **Time travel debugging**: replay to any moment, insert test agents
+- **Audit trail**: immutable log of every decision (GDPR, AI Act compliance)
+- **Deterministic testing**: record event sequence, replay in CI
+
+**Impact**: No other multi-agent framework offers this. It's the difference between a shared notepad and a nervous system.
+
 ## The Critical Test
 
 A grant reviewer will ask: **"How do you prove this?"**
@@ -138,6 +156,12 @@ If confirmed, this hypothesis has implications for:
 2. **Scaling** — More agents = more learning, not just more computation
 3. **Grant funding** — Evidence that colonial memory produces measurable, compounding advantages
 4. **Industry** — Every enterprise AI deployment could benefit from this pattern
+
+## Related Work
+
+- **Event Bus & Replay** — `docs/EVENT-BUS.md` (the technical mechanism for state rebuild)
+- **SRE & Reliability** — `docs/SRE-RELIABILITY.md` (production-grade practices)
+- **Rhizomorph Architecture** — `docs/rhizomorph/README.md` (memory layer design)
 
 ## Next Steps
 
