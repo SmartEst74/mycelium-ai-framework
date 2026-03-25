@@ -17,9 +17,17 @@ if [[ -z "$FILE_PATH" ]]; then
     exit 2
 fi
 
-# Normalize paths
-FILE_PATH=$(realpath -m "$FILE_PATH" 2>/dev/null || echo "$FILE_PATH")
-WORKSPACE=$(realpath -m "$WORKSPACE" 2>/dev/null || echo "$WORKSPACE")
+# Portable path normalization (works on macOS and Linux)
+normalize_path() {
+    local path="$1"
+    if [[ "$path" != /* ]]; then
+        path="$(pwd)/$path"
+    fi
+    python3 -c "import os,sys; print(os.path.realpath(sys.argv[1]))" "$path" 2>/dev/null || echo "$path"
+}
+
+FILE_PATH=$(normalize_path "$FILE_PATH")
+WORKSPACE=$(normalize_path "$WORKSPACE")
 MEMORY_DIR="$WORKSPACE/memory"
 ERRORS=""
 
