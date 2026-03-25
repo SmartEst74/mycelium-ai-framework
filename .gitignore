@@ -45,3 +45,7 @@ venv.bak/
 *.swp
 *.swo
 *~
+
+# Benchmark runtime
+benchmarks/.rhizomorph/
+benchmarks/results/*/20*.json

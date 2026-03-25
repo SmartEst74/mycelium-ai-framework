@@ -1,0 +1,66 @@
+{
+  "mode": "solo",
+  "missions": 5,
+  "total_time": 915,
+  "total_tokens": 227000,
+  "total_lessons": 25,
+  "lessons_reused": 0,
+  "avg_redundancy": 80.0,
+  "results": [
+    {
+      "mission_id": 1,
+      "mode": "solo",
+      "time_seconds": 210,
+      "tokens": 50000,
+      "findings": 5,
+      "lessons_learned": 5,
+      "lessons_reused": 0,
+      "redundancy_pct": 0,
+      "wall_time": 0.0019478797912597656
+    },
+    {
+      "mission_id": 2,
+      "mode": "solo",
+      "time_seconds": 160,
+      "tokens": 41000,
+      "findings": 5,
+      "lessons_learned": 5,
+      "lessons_reused": 0,
+      "redundancy_pct": 100,
+      "wall_time": 0.00066375732421875
+    },
+    {
+      "mission_id": 3,
+      "mode": "solo",
+      "time_seconds": 175,
+      "tokens": 45000,
+      "findings": 5,
+      "lessons_learned": 5,
+      "lessons_reused": 0,
+      "redundancy_pct": 100,
+      "wall_time": 0.00045108795166015625
+    },
+    {
+      "mission_id": 4,
+      "mode": "solo",
+      "time_seconds": 210,
+      "tokens": 50000,
+      "findings": 5,
+      "lessons_learned": 5,
+      "lessons_reused": 0,
+      "redundancy_pct": 100,
+      "wall_time": 0.0005717277526855469
+    },
+    {
+      "mission_id": 5,
+      "mode": "solo",
+      "time_seconds": 160,
+      "tokens": 41000,
+      "findings": 5,
+      "lessons_learned": 5,
+      "lessons_reused": 0,
+      "redundancy_pct": 100,
+      "wall_time": 0.0009589195251464844
+    }
+  ]
+}

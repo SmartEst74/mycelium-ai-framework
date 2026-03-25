@@ -1,0 +1,67 @@
+{
+  "mode": "colonial",
+  "missions": 5,
+  "total_time": 480.83,
+  "total_tokens": 174900,
+  "total_lessons": 15,
+  "lessons_reused": 9,
+  "avg_redundancy": 40.0,
+  "rhizomorph_size": 15,
+  "results": [
+    {
+      "mission_id": 1,
+      "mode": "colonial",
+      "time_seconds": 130.0,
+      "tokens": 50000,
+      "findings": 5,
+      "lessons_learned": 5,
+      "lessons_reused": 0,
+      "redundancy_pct": 0,
+      "wall_time": 0.0009
+    },
+    {
+      "mission_id": 2,
+      "mode": "colonial",
+      "time_seconds": 100.0,
+      "tokens": 41000,
+      "findings": 5,
+      "lessons_learned": 5,
+      "lessons_reused": 0,
+      "redundancy_pct": 0,
+      "wall_time": 0.0006
+    },
+    {
+      "mission_id": 3,
+      "mode": "colonial",
+      "time_seconds": 108.33,
+      "tokens": 45000,
+      "findings": 5,
+      "lessons_learned": 5,
+      "lessons_reused": 0,
+      "redundancy_pct": 0,
+      "wall_time": 0.0005
+    },
+    {
+      "mission_id": 4,
+      "mode": "colonial",
+      "time_seconds": 80.0,
+      "tokens": 21500,
+      "findings": 5,
+      "lessons_learned": 0,
+      "lessons_reused": 4,
+      "redundancy_pct": 100.0,
+      "wall_time": 0.0
+    },
+    {
+      "mission_id": 5,
+      "mode": "colonial",
+      "time_seconds": 62.5,
+      "tokens": 17400,
+      "findings": 5,
+      "lessons_learned": 0,
+      "lessons_reused": 5,
+      "redundancy_pct": 100.0,
+      "wall_time": 0.0
+    }
+  ]
+}
