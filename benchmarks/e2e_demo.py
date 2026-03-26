@@ -12,7 +12,7 @@ Run: python3 e2e_demo.py
 """
 
 import sqlite3, json, time, argparse
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, List, Dict
 
@@ -43,7 +43,7 @@ class EventBus:
             return row[0] or 0
     
     def emit(self, event_type: str, payload: dict):
-        timestamp = datetime.utcnow().isoformat() + "Z"
+        timestamp = datetime.now(timezone.utc).isoformat()
         with sqlite3.connect(self.db_path) as conn:
             cur = conn.execute(
                 "INSERT INTO events (type, payload, timestamp) VALUES (?,?,?)",
