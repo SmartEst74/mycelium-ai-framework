@@ -1,4 +1,4 @@
-# Lessons: Model-Selection
+# Lessons: Model Selection
 
 ### From mission `model-selection` (project: mycelium-ai-framework)
 
