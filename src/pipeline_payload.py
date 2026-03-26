@@ -69,7 +69,7 @@ class PipelinePayload:
 
     def to_dict(self) -> Dict[str, Any]:
         return {
-            '': self.schema,
+            '$schema': self.schema,
             'id': self.id,
             'created_at': self.created_at,
             'pipeline': self.pipeline,
@@ -87,4 +87,20 @@ class PipelinePayload:
         # Ensure each phase is in allowed list
         for p in phases:
             if p not in allowed_order:
-                raise ValueError(funknown
+                raise ValueError(f"unknown phase '{p}' in pipeline")
+        indices = [allowed_order.index(p) for p in phases]
+        if indices != sorted(indices):
+            raise ValueError('pipeline phases must be in order: scout -> know -> spawn')
+        return True
+
+# Convenience constructor
+def make_default_pipeline(urls: List[str], tasks: List[Dict[str, Any]]):
+    scout = ScoutPhase(urls=urls)
+    know = KnowPhase()
+    spawn_tasks = [SpawnTask(**t) for t in tasks]
+    spawn = SpawnPhase(tasks=spawn_tasks)
+    pp = PipelinePayload()
+    pp.add_scout(scout)
+    pp.add_know(know)
+    pp.add_spawn(spawn)
+    return pp
