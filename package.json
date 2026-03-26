@@ -8,6 +8,8 @@
   "scripts": {
     "start": "node --experimental-sqlite src/cli.mjs",
     "test": "node --experimental-sqlite --test ./tests/test.mjs",
+    "test:delegation": "node --experimental-sqlite --test ./tests/test_delegation.mjs",
+    "test:all": "node --experimental-sqlite --test ./tests/test.mjs ./tests/test_delegation.mjs",
     "bench": "node --experimental-sqlite benchmarks/colonial_memory_bench.mjs",
     "health": "node --experimental-sqlite src/cli.mjs health",
     "mission": "node --experimental-sqlite src/cli.mjs mission"
