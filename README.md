@@ -3,7 +3,7 @@
 **A multi-agent orchestration framework with proven colonial memory — agents that learn faster together than alone.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-green.svg)](https://python.org)
+[![Node.js 22+](https://img.shields.io/badge/Node.js-22+-green.svg)](https://nodejs.org)
 [![OpenClaw](https://img.shields.io/badge/OpenClaw-compatible-orange.svg)](https://openclaw.ai)
 
 ## The Problem
@@ -38,10 +38,10 @@ cd mycelium-ai-framework
 make setup
 
 # Run the proof
-python3 benchmarks/colonial_memory_demo.py
+node --experimental-sqlite benchmarks/colonial_memory_bench.mjs
 
 # Run the full E2E demo
-python3 benchmarks/e2e_demo.py
+node --experimental-sqlite src/cli.mjs mission "Deploy landing page" --capabilities frontend design
 ```
 
 ## Architecture

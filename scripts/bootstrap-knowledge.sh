@@ -115,7 +115,7 @@ echo "  ✓ Imported SRE & event sourcing lessons"
 if command -v python3 &>/dev/null; then
   echo ""
   echo "Running E2E demo to verify installation..."
-  if python3 "$REPO_DIR/benchmarks/e2e_demo.py" 2>/dev/null; then
+  if node --experimental-sqlite "$REPO_DIR/benchmarks/colonial_memory_bench.mjs" 2>/dev/null; then
     echo "  ✓ E2E demo passed — event bus and replay verified"
   else
     echo "  ⚠ E2E demo had issues (check Python 3.11+ dependencies)"
