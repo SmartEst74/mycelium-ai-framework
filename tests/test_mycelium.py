@@ -1,6 +1,7 @@
 """Tests for the Mycelium core module."""
 
 import pytest
+import os
 from core.mycelium import Mycelium, Scout, ArmyAnt, DynamicAnt
 from core.providers import MockAgentProvider
 
@@ -54,7 +55,7 @@ class TestMycelium:
         assert "mimo-v2-omni" in model, "Vision tasks MUST use mimo-v2-omni"
 
     def test_execute_mission(self):
-        brain = Mycelium(provider=MockAgentProvider(), rhizomorph_db=":memory:")
+        brain = Mycelium(provider=MockAgentProvider(), rhizomorph_db="/tmp/test_mycelium_lcm.db")
         result = brain.execute_mission("Test mission")
         # ensure rhizomorph sequence was returned and dispatch exists
         assert "rhizo_seq" in result
@@ -70,14 +71,14 @@ class TestScout:
         assert "step-3.5-flash" in scout.model
 
     def test_research_models(self):
-        brain = Mycelium(provider=MockAgentProvider(), rhizomorph_db=":memory:")
+        brain = Mycelium(provider=MockAgentProvider(), rhizomorph_db="/tmp/test_mycelium_lcm.db")
         scout = Scout(brain)
         result = scout.research_models("compare free models")
         # provider returns tags indicating benchmark
         assert isinstance(result, dict)
 
     def test_find_opportunities(self):
-        brain = Mycelium(provider=MockAgentProvider(), rhizomorph_db=":memory:")
+        brain = Mycelium(provider=MockAgentProvider(), rhizomorph_db="/tmp/test_mycelium_lcm.db")
         scout = Scout(brain)
         result = scout.find_opportunities("micro-saas")
         assert isinstance(result, dict)
@@ -92,7 +93,7 @@ class TestArmyAnt:
         assert "mimo-v2-pro" in army.model
 
     def test_build_team(self):
-        brain = Mycelium(provider=MockAgentProvider(), rhizomorph_db=":memory:")
+        brain = Mycelium(provider=MockAgentProvider(), rhizomorph_db="/tmp/test_mycelium_lcm.db")
         army = ArmyAnt(brain)
         team = army.build_team("Build a landing page", ["frontend", "design"])
         assert len(team["team"]) == 2
@@ -102,7 +103,7 @@ class TestDynamicAnt:
     """Tests for Dynamic Ants (workers)."""
 
     def test_execute_writes_memory(self):
-        brain = Mycelium(provider=MockAgentProvider(), rhizomorph_db=":memory:")
+        brain = Mycelium(provider=MockAgentProvider(), rhizomorph_db="/tmp/test_mycelium_lcm.db")
         # build a dynamic ant via ArmyAnt coordinate path to ensure rhizomorph writes
         army = ArmyAnt(brain)
         team = army.build_team("Small mission", ["frontend"])

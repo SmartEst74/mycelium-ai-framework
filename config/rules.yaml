@@ -77,16 +77,16 @@ rules:
 
   shared-memory-health:
     - Colony is HEALTHY when:
-      * #mission entries have recent timestamps
-      * #mission-complete entries outnumber #mission
-      * #pain-point entries are being addressed
-      * #green-leaf entries exist (revenue being hunted)
-      * #benchmark entries are recent
+      - #mission entries have recent timestamps
+      - #mission-complete entries outnumber #mission
+      - #pain-point entries are being addressed
+      - #green-leaf entries exist (revenue being hunted)
+      - #benchmark entries are recent
     - Colony is SICK when:
-      * #mission entries go stale (>30 min no update)
-      * #pain-point entries accumulate without #lesson resolutions
-      * No #green-leaf in 24h (revenue hunt stopped)
-      * No #benchmark in 7 days (model quality unchecked)
+      - #mission entries go stale (>30 min no update)
+      - #pain-point entries accumulate without #lesson resolutions
+      - No #green-leaf in 24h (revenue hunt stopped)
+      - No #benchmark in 7 days (model quality unchecked)
     - Mycelium checks colony health on every heartbeat
 
   environment:

@@ -31,12 +31,19 @@ class Mycelium:
     def _load_registry(self):
         roles = {}
         roles_dir = FRAMEWORK_ROOT / "registry" / "roles"
+        # Load roles from subdirectories (e.g., design/, marketing/)
         for dept_dir in roles_dir.iterdir():
             if dept_dir.is_dir():
                 dept = dept_dir.name
                 roles[dept] = []
                 for role_file in dept_dir.glob("*.md"):
                     roles[dept].append(role_file.stem)
+        # Also load roles directly in roles/ (e.g., engineering-*.md)
+        root_roles = []
+        for role_file in roles_dir.glob("*.md"):
+            root_roles.append(role_file.stem)
+        if root_roles:
+            roles["engineering"] = root_roles
         return roles
 
     def get_model_for_role(self, role):
