@@ -23,7 +23,7 @@ normalize_path() {
     if [[ "$path" != /* ]]; then
         path="$(pwd)/$path"
     fi
-    python3 -c "import os,sys; print(os.path.realpath(sys.argv[1]))" "$path" 2>/dev/null || echo "$path"
+    readlink -f "$path" 2>/dev/null || echo "$path"
 }
 
 FILE_PATH=$(normalize_path "$FILE_PATH")
