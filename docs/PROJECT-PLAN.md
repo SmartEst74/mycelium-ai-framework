@@ -24,7 +24,7 @@ Mycelium Claw extends the Lossless Claw Memory (LCM) plugin with a mycelial even
 | Sprint 2 | Routing — subscriptions, signals, router | Days 3–4 | Pub/sub working. Jon can inject signals. |
 | Sprint 3 | Spore — server, API, WebSocket | Days 5–6 | Live HTTP/WS server. Events stream in real-time. |
 | Sprint 4 | Spore — frontend dashboard | Days 7–9 | Browser-based colony visualisation. |
-| Sprint 5 | SRE — health, retention, security | Days 10–11 | Production-ready observability. |
+| Sprint 5 | SRE & Security — Grafana, health, retention, auth | Days 10–11 | Production-ready observability with dashboards. |
 | Sprint 6 | Integration — docs, testing, polish | Days 12–14 | Full documentation. Integration tests. Grant-ready demo. |
 
 ---
@@ -194,21 +194,24 @@ Mycelium Claw extends the Lossless Claw Memory (LCM) plugin with a mycelial even
 
 ## Sprint 5: SRE & Security (Days 10–11)
 
-### Day 10 — Health & Observability
+### Day 10 — Observability (Grafana + Prometheus)
 
-**Goal:** System is observable. You can see what's happening and why.
+**Goal:** System is observable. You can see what's happening and why. Grafana dashboards provide real-time insight into colony health, event throughput, agent activity, and signal flow.
 
 | Issue | Title | Estimate |
 |-------|-------|----------|
-| #33 | Metrics collection — events/sec, active agents, signal queue | 3h |
-| #34 | Alert thresholds — configurable alerts for anomalous conditions | 2h |
-| #35 | Retention/cleanup — auto-archive events older than 30 days | 2h |
-| #36 | SQLite backup — automated backup via .backup command | 1h |
+| #33 | Metrics collection + Prometheus /metrics endpoint | 3h |
+| #34 | Grafana dashboard — colony health, event rate, agent status, signal queue | 3h |
+| #35 | Alert thresholds — configurable alerts for anomalous conditions | 2h |
+| #36 | Retention/cleanup — auto-archive events older than 30 days | 2h |
+| #37 | SQLite backup — automated backup via .backup command | 1h |
 
 **Acceptance criteria:**
-- [ ] Health endpoint returns all key metrics
-- [ ] Alerts trigger when thresholds are crossed
-- [ ] Old events are archived and cleaned up
+- [ ] /metrics endpoint exports Prometheus-format gauges and counters
+- [ ] Grafana dashboard auto-provisions (docker-compose or config file)
+- [ ] Dashboard shows: event throughput (events/min), active agents, signal queue depth, WS connections, DB size, event delivery latency
+- [ ] Alerts trigger when thresholds are crossed (Grafana alerting or alert rules)
+- [ ] Old events archived and cleaned up
 - [ ] Backup runs on schedule
 
 ### Day 11 — Security Hardening
@@ -314,6 +317,12 @@ Mycelium Claw extends the Lossless Claw Memory (LCM) plugin with a mycelial even
 **Decision:** Extend LCM with new tables and tools. Same plugin, same database.
 **Rationale:** LCM's migration system supports additive changes. Forking would create a maintenance burden. Extending means we inherit LCM's reliability and OpenClaw integration.
 **Consequences:** Mycelium Claw is coupled to LCM's release cycle. Mitigated by upstream tracking in our fork.
+
+### ADR-006: Grafana + Prometheus for observability
+**Context:** We need real-time visibility into colony health, event throughput, and agent activity. Custom dashboards are brittle and hard to maintain.
+**Decision:** Export metrics in Prometheus format via /metrics endpoint. Provision a Grafana dashboard for visualisation and alerting.
+**Rationale:** Prometheus + Grafana is the industry standard for SRE observability. Prometheus scrapes /metrics (zero dependency on our side — just a text endpoint). Grafana provides professional dashboards, alerting, and historical analysis out of the box. Docker-compose makes setup trivial.
+**Consequences:** Requires Prometheus and Grafana running alongside Spore. Acceptable for any SRE team. Docker-compose snippet provided. Prometheus scrape interval defaults to 15s (standard).
 
 ---
 
