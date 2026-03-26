@@ -47,20 +47,22 @@ node --experimental-sqlite src/cli.mjs mission "Deploy landing page" --capabilit
 ## Architecture
 
 ```
-                       JON (Human)
+                        HUMAN
                           │
                           ▼
                   ┌───────────────┐
-                  │   MYCELIUM    │  Orchestrator
-                  │   (Brain)     │  Routes, reasons, delegates
-                  └───────┬───────┘
-                          │
-            ┌─────────────┼─────────────┐
+                  │   MYCELIUM    │  Strategic Brain
+                  │   (Brain)     │  Decomposes, spawns, coordinates
+                  │               │  NEVER executes, NEVER uses vision
+                  └───┬───┬───┬───┘
+                      │   │   │
+            ┌─────────┘   │   └─────────┐
             ▼             ▼             ▼
       ┌──────────┐ ┌──────────┐ ┌──────────┐
       │  SCOUT   │ │  ARMY    │ │ DYNAMIC  │
-      │  SWARM   │ │  ANT     │ │  ANTS    │
-      │ research │ │coordinate│ │ execute  │
+      │  SWARM   │ │  ANTS    │ │  ANTS    │
+      │ research │ │ protect  │ │ execute  │
+      │ only     │ │ enforce  │ │ build    │
       └─────┬────┘ └─────┬────┘ └─────┬────┘
             │            │            │
             └────────────┼────────────┘
@@ -71,6 +73,17 @@ node --experimental-sqlite src/cli.mjs mission "Deploy landing page" --capabilit
                   │  LCM   QMD    │  Session + Durable
                   └───────────────┘
 ```
+
+### Four Roles (Biological Analogy)
+
+| Biology | Role | What They Do | What They NEVER Do |
+|---------|------|-------------|-------------------|
+| **Mycelium** | Brain | Decompose missions, spawn workers, coordinate | Execute, use vision, do research |
+| **Scout ant** | Sensor | Research, investigate, benchmark models | Execute, build, deploy |
+| **Army ant** | Protector | Security scans, warning enforcement, threat detection | Coordinate, build, plan |
+| **Worker ant** | Builder | Execute one focused task, self-evaluate | Coordinate, spawn others |
+
+**Army Ants protect the colony** — they don't coordinate workers. In nature, army ants defend the nest and fight threats. In our framework, they scan for vulnerabilities, enforce hard constraints, and track warnings until fully resolved.
 
 ### Three-Layer Memory
 
@@ -124,12 +137,20 @@ Each role includes memory integration instructions (search QMD before work, writ
 
 | Role | Model | Rationale |
 |------|-------|-----------|
-| Mycelium (brain) | mimo-v2-pro:free | 1M context — needs memory |
+| Mycelium (brain) | mimo-v2-pro:free | 1M context — needs memory + reasoning |
 | Scouts (research) | step-3.5-flash:free | Fast, cheap — probes and reports |
-| Coordinators | mimo-v2-pro:free | 1M context for registry + mission state |
+| Army Ants (protect) | mimo-v2-omni:free | Vision for scanning, tools for fixing |
 | Workers (execute) | mimo-v2-omni:free | Vision + tools — eyes and hands |
 
-**Rule:** Free only. Never downgrade. Benchmark monthly.
+**Rule:** Free only. Never downgrade. Only upgrade with proof (3+ benchmark data points). Benchmark monthly.
+
+## Self-Improvement Loop
+
+Every task follows: RUN → EVALUATE → RECORD → IMPROVE
+
+After every task, agents self-evaluate (1-5 each on Accuracy, Efficiency, Completeness, Reusability). Scores accumulate in shared memory. The Benchmark Scout reads patterns across sessions and reports which models/approaches work best for which tasks. The colony gets smarter with every mission.
+
+See [docs/SELF-IMPROVEMENT.md](docs/SELF-IMPROVEMENT.md).
 
 ## Memory Protocol
 
@@ -156,14 +177,15 @@ See docs/ENFORCEMENT.md.
 
 | Document | Description |
 |----------|-------------|
-| Hypothesis | Scientific framing, experimental design, grant pitch |
-| Architecture | Full system architecture |
-| Event Bus | Event sourcing and replay design |
-| Colonial Memory | LCM + QMD integration spec |
-| Enforcement | Rules and validation system |
-| SRE | Reliability practices |
-| Lessons | 17 hard-won lessons from real use |
-| Roadmap | Development phases |
+| [Deployment](docs/DEPLOYMENT.md) | **Start here** — get a colony running in 10 minutes |
+| [Self-Improvement](docs/SELF-IMPROVEMENT.md) | The MiniMax-inspired learning loop |
+| [Architecture](docs/ARCHITECTURE.md) | Full system architecture with all four roles |
+| [Colonial Memory](docs/COLONIAL-MEMORY-ARCHITECTURE.md) | LCM + QMD integration spec |
+| [Event Bus](docs/EVENT-BUS.md) | Event sourcing and replay design |
+| [Enforcement](docs/ENFORCEMENT.md) | Rules and validation system |
+| [SRE](docs/SRE-RELIABILITY.md) | Reliability practices |
+| [Lessons](docs/LESSONS.md) | Hard-won lessons from real use |
+| [Roadmap](docs/ROADMAP.md) | Development phases |
 
 ## Contributing
 

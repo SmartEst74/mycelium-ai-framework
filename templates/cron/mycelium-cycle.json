@@ -1,0 +1,11 @@
+{
+  "name": "Mycelium Cycle",
+  "schedule": { "kind": "every", "everyMs": 7200000 },
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Heartbeat cycle. Read HEARTBEAT.md and follow it. Check colony health. If no work in progress, find the next concrete step. Only message the human if there is a real opportunity, blocker, or failure. Otherwise reply HEARTBEAT_OK."
+  },
+  "sessionTarget": "isolated",
+  "delivery": { "mode": "announce" },
+  "enabled": true
+}

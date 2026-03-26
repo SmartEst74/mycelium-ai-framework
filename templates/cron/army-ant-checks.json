@@ -1,0 +1,11 @@
+{
+  "name": "Army Ant Health Sweep",
+  "schedule": { "kind": "every", "everyMs": 3600000 },
+  "payload": {
+    "kind": "agentTurn",
+    "message": "ARMY ANT SWEEP. Run parallel protection checks:\n\n1. Disk health: check disk usage with `df -h`. Warn if any partition > 80%.\n2. Service health: check if key services are running. Use `openclaw status` and `curl` health endpoints.\n3. Code quality: check for any warnings/errors in recent changes.\n\nFor each finding:\n- Write to memory with #warning tag if issue found\n- Attempt fix if trivial\n- Track warning until next sweep confirms resolved\n\nOnly report threats. If everything is clean, reply with a brief all-clear."
+  },
+  "sessionTarget": "isolated",
+  "delivery": { "mode": "announce" },
+  "enabled": true
+}
