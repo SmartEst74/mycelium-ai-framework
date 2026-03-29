@@ -110,11 +110,56 @@ Mission N: Agent has full context from all prior work → near-instant
 |-----------|-------------|--------|
 | **Core** | Mycelium orchestrator, model routing | Working |
 | **Registry** | 178+ specialized agent roles | Imported |
-| **Rhizomorph** | Event bus with replay | Proven |
+| **Rhizomorph** | Event bus with replay (exact tag matching) | Proven |
+| **Neural Bridge** | Rust SOTA memory substrate (LCM + QMD) | Working |
+| **Spore Dashboard** | Real-time WebSocket colony visualizer | Working |
+| **Self-Eval** | Agent self-evaluation after every task | Working |
+| **Model Config** | Config-driven model assignment (YAML) | Working |
+| **Circuit Breaker** | Provider retry + fail-fast protection | Working |
 | **Curator** | LCM to QMD knowledge bridge | Prototype |
 | **Benchmark** | Solo vs colonial comparison | 47% faster |
 | **Enforcement** | Pre-commit hooks, validation | Working |
 | **Bootstrap** | Portable knowledge import | Working |
+| **CI/CD** | GitHub Actions (Node + Rust tests) | Working |
+
+## Neural Bridge (Rust)
+
+The `neural-bridge/` crate is the SOTA memory substrate — a Rust skill that fuses the best of LCM (session compaction) and QMD (durable knowledge) into a single high-performance layer.
+
+**Subsystems:**
+
+| Module | Purpose |
+|--------|---------|
+| `hyphae` | Event store with exact tag matching, meta-tag auto-updates |
+| `router` | Signal routing, agent registration, heartbeat, health |
+| `taxonomy` | Tag scoring (frequency × recency), co-occurrence relationships |
+| `consolidator` | Hot → Warm → Cold → Frozen tier lifecycle |
+| `crystallizer` | Promotes #lesson/#benchmark/#pain-point to durable Crystals |
+| `spore` | Real-time WebSocket broadcast for dashboard |
+
+```bash
+# Run Rust tests
+cd neural-bridge && cargo test
+
+# Start the spore server (ws://localhost:9001)
+cargo run --bin spore-server
+
+# CLI commands
+cargo run --bin neural-bridge -- emit --tag '#lesson' --agent worker-1 --payload 'Use batch inserts'
+cargo run --bin neural-bridge -- health
+cargo run --bin neural-bridge -- taxonomy
+cargo run --bin neural-bridge -- crystallize
+```
+
+## Spore Dashboard
+
+Real-time colony visualization at `dashboard/index.html`. Connects to the neural-bridge spore server via WebSocket.
+
+```bash
+make dashboard
+```
+
+Shows: colony health, live event stream, taxonomy/meta-tags, crystals (durable knowledge), and consolidation tiers. Supports commands: `health`, `recent`, `taxonomy`, `crystals`, `tiers`, `inject tag:payload`.
 
 ## Agent Roles
 
@@ -148,9 +193,7 @@ Each role includes memory integration instructions (search QMD before work, writ
 
 Every task follows: RUN → EVALUATE → RECORD → IMPROVE
 
-After every task, agents self-evaluate (1-5 each on Accuracy, Efficiency, Completeness, Reusability). Scores accumulate in shared memory. The Benchmark Scout reads patterns across sessions and reports which models/approaches work best for which tasks. The colony gets smarter with every mission.
-
-See [docs/SELF-IMPROVEMENT.md](docs/SELF-IMPROVEMENT.md).
+After every task, agents self-evaluate (Accuracy, Efficiency, Completeness, Reusability on 1-5 scale). High scores (avg ≥ 4) auto-tag as `#lesson`. Low efficiency auto-tags as `#shortcut`. Low overall (avg < 3) auto-tags as `#pain-point`. Scores accumulate in shared memory — the Benchmark Scout reads patterns and the Crystallizer promotes repeat lessons to durable Crystals.
 
 ## Memory Protocol
 

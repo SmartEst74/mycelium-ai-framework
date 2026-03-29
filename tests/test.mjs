@@ -4,7 +4,7 @@
 import { describe, it, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { Rhizomorph } from '../src/rhizomorph.mjs';
-import { Mycelium, RoleRegistry, DynamicAnt, ArmyAnt, Scout } from '../src/mycelium.mjs';
+import { Mycelium, RoleRegistry, DynamicAnt, ArmyAnt, Scout, ModelConfig } from '../src/mycelium.mjs';
 import { MockProvider } from '../src/providers.mjs';
 import { unlinkSync, existsSync } from 'node:fs';
 
@@ -34,7 +34,7 @@ describe('Rhizomorph', () => {
     rh.emit('memory.write', { a: 1 }, { tags: ['#mission'] });
     rh.emit('memory.write', { b: 2 }, { tags: ['#mission-complete'] });
     rh.emit('memory.write', { c: 3 }, { tags: ['#mission'] });
-    assert.equal(rh.countByTag('#mission'), 3) // LIKE also matches #mission-complete;
+    assert.equal(rh.countByTag('#mission'), 2); // exact match, no longer cross-matches #mission-complete
     assert.equal(rh.countByTag('#mission-complete'), 1);
     rh.close();
   });
@@ -94,8 +94,9 @@ describe('Mycelium', () => {
     assert.ok(result.rhizoSeq > 0);
     assert.equal(result.dispatch.length, 2);
     assert.ok(result.dispatch.every(d => d.status === 'completed'));
+    assert.ok(result.dispatch.every(d => d.scores && typeof d.scores.accuracy === 'number'));
 
-    // Check rhizomorph has the events
+    // Check rhizomorph has the events (missions + self-evals)
     const missions = brain.rhizo.query({ tags: ['#mission'] });
     assert.ok(missions.length >= 3); // mycelium start + army build + 2x dynamic ant
   });

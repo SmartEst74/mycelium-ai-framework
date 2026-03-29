@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mycelium Spore Dashboard</title>
+<style>
+  :root {
+    --bg: #0a0e14; --surface: #131920; --border: #1e2a35;
+    --text: #c5cdd9; --accent: #39bae6; --green: #7fd962;
+    --orange: #ff8f40; --red: #ff3333; --purple: #d2a6ff;
+    --dim: #5c6773; --font: 'Berkeley Mono', 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 13px; }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 20px; border-bottom: 1px solid var(--border); background: var(--surface);
+  }
+  header h1 { font-size: 16px; font-weight: 600; color: var(--accent); }
+  header h1 span { color: var(--dim); font-weight: 400; }
+  #status { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  #status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+  #status.connected .dot { background: var(--green); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr; gap: 1px; height: calc(100vh - 49px); background: var(--border); }
+  .panel { background: var(--surface); overflow: hidden; display: flex; flex-direction: column; }
+  .panel-header { padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--dim); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .panel-body { padding: 8px 12px; overflow-y: auto; flex: 1; }
+  .health-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; grid-column: 1 / -1; }
+  .stat { background: var(--bg); border-radius: 4px; padding: 12px; text-align: center; }
+  .stat .value { font-size: 24px; font-weight: 700; color: var(--accent); }
+  .stat .label { font-size: 10px; color: var(--dim); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat.healthy .value { color: var(--green); }
+  .stat.warning .value { color: var(--orange); }
+  .stat.critical .value { color: var(--red); }
+  .event { padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 12px; animation: fadeIn 0.3s ease; }
+  .event:last-child { border: none; }
+  .event .meta { color: var(--dim); font-size: 10px; margin-bottom: 2px; }
+  .event .tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; margin-left: 4px; }
+  .tag-lesson { background: rgba(127,217,98,0.15); color: var(--green); }
+  .tag-pain-point { background: rgba(255,51,51,0.15); color: var(--red); }
+  .tag-mission { background: rgba(57,186,230,0.15); color: var(--accent); }
+  .tag-mission-complete { background: rgba(127,217,98,0.15); color: var(--green); }
+  .tag-benchmark { background: rgba(210,166,255,0.15); color: var(--purple); }
+  .tag-green-leaf { background: rgba(127,217,98,0.15); color: var(--green); }
+  .tag-shortcut { background: rgba(255,143,64,0.15); color: var(--orange); }
+  .tag-self-eval { background: rgba(210,166,255,0.15); color: var(--purple); }
+  .taxonomy-item { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .taxonomy-item .bar { height: 4px; background: var(--accent); border-radius: 2px; margin-top: 4px; }
+  .crystal { padding: 8px; margin-bottom: 6px; background: var(--bg); border-radius: 4px; border-left: 3px solid var(--purple); }
+  .crystal .type { font-size: 10px; color: var(--purple); text-transform: uppercase; letter-spacing: 0.5px; }
+  .crystal .title { font-weight: 600; margin: 4px 0 2px; }
+  .crystal .confidence { font-size: 10px; color: var(--dim); }
+  .prompt-flow { padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .prompt-flow .agent { color: var(--accent); font-weight: 600; font-size: 11px; }
+  .prompt-flow .model { color: var(--dim); font-size: 10px; }
+  .prompt-flow .task { color: var(--text); margin-top: 2px; white-space: pre-wrap; word-break: break-word; max-height: 60px; overflow: hidden; cursor: pointer; }
+  .prompt-flow .task.expanded { max-height: none; }
+  #cmd { display: flex; gap: 8px; padding: 8px; grid-column: 1 / -1; background: var(--surface); border-top: 1px solid var(--border); }
+  #cmd input { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 6px 10px; border-radius: 4px; font-family: var(--font); font-size: 12px; outline: none; }
+  #cmd input:focus { border-color: var(--accent); }
+  #cmd button { background: var(--accent); color: var(--bg); border: none; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-family: var(--font); font-weight: 600; font-size: 12px; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  .empty { color: var(--dim); font-style: italic; padding: 20px; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🍄 Mycelium <span>Spore Dashboard</span></h1>
+  <div id="status"><div class="dot"></div><span>Disconnected</span></div>
+</header>
+<div class="grid">
+  <div class="health-grid" id="health"></div>
+  <div class="panel">
+    <div class="panel-header">Live Event Stream</div>
+    <div class="panel-body" id="events"><div class="empty">Waiting for events…</div></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header">Taxonomy / Meta-Tags</div>
+    <div class="panel-body" id="taxonomy"><div class="empty">No tags yet</div></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header">Crystals (Durable Knowledge)</div>
+    <div class="panel-body" id="crystals"><div class="empty">No crystals yet</div></div>
+  </div>
+  <div id="cmd">
+    <input id="input" type="text" placeholder="Type a command: health | recent | taxonomy | crystals | tiers | inject tag:payload" autocomplete="off">
+    <button onclick="sendCmd()">Send</button>
+  </div>
+</div>
+<script>
+const WS_URL = `ws://${location.hostname || 'localhost'}:9001`;
+let ws, reconnectTimer;
+const MAX_EVENTS = 200;
+
+function connect() {
+  ws = new WebSocket(WS_URL);
+  ws.onopen = () => {
+    document.getElementById('status').className = 'connected';
+    document.querySelector('#status span').textContent = 'Connected';
+    ws.send('health');
+    ws.send('taxonomy');
+    ws.send('crystals');
+    ws.send('recent');
+  };
+  ws.onclose = () => {
+    document.getElementById('status').className = '';
+    document.querySelector('#status span').textContent = 'Disconnected';
+    reconnectTimer = setTimeout(connect, 3000);
+  };
+  ws.onerror = () => ws.close();
+  ws.onmessage = (e) => handleMsg(e.data);
+}
+
+function handleMsg(raw) {
+  let data;
+  try { data = JSON.parse(raw); } catch { return; }
+
+  if (data.colony_health || data.active_agents !== undefined) renderHealth(data);
+  else if (data.type === 'hypha') renderEvent(data);
+  else if (Array.isArray(data) && data[0]?.tag) renderTaxonomy(data);
+  else if (Array.isArray(data) && data[0]?.crystal_type) renderCrystals(data);
+  else if (Array.isArray(data)) data.forEach(d => { if (d.tag || d.payload) renderEvent(d); });
+  else if (data.tiers) renderTiers(data.tiers);
+}
+
+function renderHealth(h) {
+  const el = document.getElementById('health');
+  const ch = h.colony_health || h;
+  const stats = [
+    { label: 'Status', value: ch.status || 'unknown', cls: ch.status === 'healthy' ? 'healthy' : 'critical' },
+    { label: 'Active Agents', value: h.active_agents ?? '–' },
+    { label: 'Completed', value: ch.completed_missions ?? ch.completedMissions ?? '–', cls: 'healthy' },
+    { label: 'Pain Points', value: ch.pain_points ?? ch.painPoints ?? 0, cls: (ch.pain_points || ch.painPoints || 0) > 3 ? 'critical' : '' },
+    { label: 'Lessons', value: ch.lessons ?? '–', cls: 'healthy' },
+    { label: 'Benchmarks', value: ch.recent_benchmarks ?? ch.recentBenchmarks ?? '–' },
+  ];
+  el.innerHTML = stats.map(s => `<div class="stat ${s.cls || ''}"><div class="value">${s.value}</div><div class="label">${s.label}</div></div>`).join('');
+}
+
+function tagClass(tag) {
+  const t = tag.replace('#', '').replace(/\s/g, '');
+  return `tag-${t}`;
+}
+
+function renderEvent(ev) {
+  const el = document.getElementById('events');
+  if (el.querySelector('.empty')) el.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = 'event';
+  const tag = ev.tag || '';
+  const agent = ev.agent || ev.origin || '';
+  const ts = ev.timestamp ? new Date(ev.timestamp).toLocaleTimeString() : new Date().toLocaleTimeString();
+  const payload = typeof ev.payload === 'string' ? ev.payload : (ev.content || JSON.stringify(ev.payload || ''));
+  div.innerHTML = `<div class="meta">${ts} · ${agent}${tag ? `<span class="tag ${tagClass(tag)}">${tag}</span>` : ''}</div><div>${payload.slice(0, 200)}</div>`;
+  el.prepend(div);
+  while (el.children.length > MAX_EVENTS) el.lastChild.remove();
+}
+
+function renderTaxonomy(tags) {
+  const el = document.getElementById('taxonomy');
+  if (!tags.length) { el.innerHTML = '<div class="empty">No tags yet</div>'; return; }
+  const maxScore = Math.max(...tags.map(t => t.score || t.frequency || 1));
+  el.innerHTML = tags.map(t => {
+    const pct = ((t.score || t.frequency || 0) / maxScore * 100).toFixed(0);
+    return `<div class="taxonomy-item"><div><span>${t.tag}</span> <span style="color:var(--dim)">(${t.frequency || t.count || 0})</span></div><div style="width:${pct}px"><div class="bar" style="width:100%"></div></div></div>`;
+  }).join('');
+}
+
+function renderCrystals(crystals) {
+  const el = document.getElementById('crystals');
+  if (!crystals.length) { el.innerHTML = '<div class="empty">No crystals yet</div>'; return; }
+  el.innerHTML = crystals.map(c => `<div class="crystal"><div class="type">${c.crystal_type}</div><div class="title">${c.title}</div><div>${(c.content || '').slice(0, 120)}</div><div class="confidence">confidence: ${(c.confidence * 100).toFixed(0)}%</div></div>`).join('');
+}
+
+function renderTiers(tiers) {
+  const el = document.getElementById('crystals');
+  el.innerHTML = `<h3 style="color:var(--accent);margin-bottom:8px">Consolidation Tiers</h3>` +
+    Object.entries(tiers).map(([tier, count]) => `<div class="taxonomy-item"><span>${tier}</span><span style="color:var(--accent)">${count}</span></div>`).join('');
+}
+
+function sendCmd() {
+  const input = document.getElementById('input');
+  const val = input.value.trim();
+  if (!val || !ws || ws.readyState !== 1) return;
+  ws.send(val);
+  input.value = '';
+}
+
+document.getElementById('input').addEventListener('keydown', (e) => { if (e.key === 'Enter') sendCmd(); });
+connect();
+</script>
+</body>
+</html>

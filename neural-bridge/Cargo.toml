@@ -1,0 +1,55 @@
+[package]
+name = "neural-bridge"
+version = "0.1.0"
+edition = "2021"
+description = "High-performance neural bridge fusing LCM + QMD for the Mycelium AI colony brain"
+license = "MIT"
+authors = ["OpenClaw <engineering@openclaw.dev>"]
+
+[lib]
+name = "neural_bridge"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "neural-bridge"
+path = "src/main.rs"
+
+[[bin]]
+name = "spore-server"
+path = "src/spore_server.rs"
+
+[dependencies]
+rusqlite = { version = "0.31", features = ["bundled", "backup"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+tokio-tungstenite = "0.21"
+futures-util = "0.3"
+uuid = { version = "1", features = ["v7"] }
+chrono = { version = "0.4", features = ["serde"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
+thiserror = "1"
+crossbeam-channel = "0.5"
+dashmap = "5"
+blake3 = "1"
+bincode = "1"
+hyper = { version = "1", features = ["server", "http1"] }
+hyper-util = { version = "0.1", features = ["tokio"] }
+http-body-util = "0.1"
+bytes = "1"
+tower = "0.4"
+
+[dev-dependencies]
+tempfile = "3"
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "bridge_bench"
+harness = false
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

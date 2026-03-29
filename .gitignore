@@ -52,3 +52,6 @@ benchmarks/results/*/20*.json
 benchmarks/lcm_demo.db
 *.db
 *.db
+
+# Rust
+neural-bridge/target/

@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  node-tests:
+    name: Node.js Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run tests
+        run: node --experimental-sqlite --test tests/test.mjs
+
+  rust-tests:
+    name: Rust Neural Bridge
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: neural-bridge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: neural-bridge
+      - name: Check
+        run: cargo check --all-targets
+      - name: Test
+        run: cargo test
+      - name: Clippy
+        run: cargo clippy -- -D warnings
+        continue-on-error: true
+
+  lint:
+    name: Lint & Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: Rust format check
+        working-directory: neural-bridge
+        run: cargo fmt -- --check
+        continue-on-error: true

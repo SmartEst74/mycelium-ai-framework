@@ -56,7 +56,10 @@ export class Rhizomorph {
     const p = [];
     if (filters.type) { sql += ' AND type = ?'; p.push(filters.type); }
     if (filters.agent) { sql += ' AND agent = ?'; p.push(filters.agent); }
-    if (filters.tags) { sql += ' AND tags LIKE ?'; p.push(`%${filters.tags[0]}%`); }
+    if (filters.tags) {
+      sql += ' AND EXISTS (SELECT 1 FROM json_each(events.tags) WHERE value = ?)';
+      p.push(filters.tags[0]);
+    }
     sql += ' ORDER BY seq ASC';
     if (filters.limit) { sql += ' LIMIT ?'; p.push(filters.limit); }
     return this.db.prepare(sql).all(...p).map(r => ({
@@ -73,7 +76,9 @@ export class Rhizomorph {
   getTagged(tag, limit = 100) { return this.query({ tags: [tag], limit }); }
 
   countByTag(tag) {
-    return this.db.prepare('SELECT COUNT(*) as c FROM events WHERE tags LIKE ?').get(`%${tag}%`).c;
+    return this.db.prepare(
+      'SELECT COUNT(*) as c FROM events WHERE EXISTS (SELECT 1 FROM json_each(events.tags) WHERE value = ?)'
+    ).get(tag).c;
   }
 
   get seq() {
